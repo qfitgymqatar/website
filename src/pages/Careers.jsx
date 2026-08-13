@@ -27,14 +27,21 @@ const Careers = () => {
         <div className="jobs-list">
           {data.careers.map((job) => (
             <div key={job.id} className="job-card">
-              <div className="job-header">
-                <h3>{job.title}</h3>
-                <span className="job-type">{job.type}</span>
+              {job.img && (
+                <div className="job-img">
+                  <img src={job.img} alt={job.title} />
+                </div>
+              )}
+              <div className="job-content">
+                <div className="job-header">
+                  <h3>{job.title}</h3>
+                  <span className="job-type">{job.type}</span>
+                </div>
+                <p className="job-desc">{job.desc}</p>
+                <button className="btn-primary apply-btn">
+                  Apply Now <Send size={16} />
+                </button>
               </div>
-              <p className="job-desc">{job.desc}</p>
-              <button className="btn-primary apply-btn">
-                Apply Now <Send size={16} />
-              </button>
             </div>
           ))}
 

@@ -35,7 +35,7 @@
   padding: 30px;
   border-radius: 15px;
   display: flex;
-  justify-content: space-between;
+  gap: 30px;
   align-items: center;
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: all 0.3s ease;
@@ -44,6 +44,47 @@
 .job-card:hover {
   border-color: rgba(0, 242, 254, 0.3);
   transform: translateX(10px);
+}
+
+.job-img {
+  flex-shrink: 0;
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.job-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.job-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.job-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.job-type {
+  background: rgba(0, 102, 204, 0.2);
+  color: var(--primary-cyan);
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.apply-btn {
+  align-self: flex-start;
+  margin-top: 20px;
 }
 
 .job-info h3 {

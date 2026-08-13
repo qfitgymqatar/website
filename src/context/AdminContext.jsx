@@ -111,15 +111,43 @@ export const AdminProvider = ({ children }) => {
     setData(prev => ({ ...prev, blogs: prev.blogs.filter(b => b.id !== id) }));
   };
 
+  const updateTrainer = async (id, updates) => {
+    const { data: updated, error } = await supabase.from('trainers').update(updates).eq('id', id).select();
+    if (!error && updated) {
+      setData(prev => ({ ...prev, trainers: prev.trainers.map(t => t.id === id ? updated[0] : t) }));
+    }
+  };
+
+  const updateCareer = async (id, updates) => {
+    const { data: updated, error } = await supabase.from('careers').update(updates).eq('id', id).select();
+    if (!error && updated) {
+      setData(prev => ({ ...prev, careers: prev.careers.map(c => c.id === id ? updated[0] : c) }));
+    }
+  };
+
+  const updateService = async (id, updates) => {
+    const { data: updated, error } = await supabase.from('services').update(updates).eq('id', id).select();
+    if (!error && updated) {
+      setData(prev => ({ ...prev, services: prev.services.map(s => s.id === id ? updated[0] : s) }));
+    }
+  };
+
+  const updateBlog = async (id, updates) => {
+    const { data: updated, error } = await supabase.from('blogs').update(updates).eq('id', id).select();
+    if (!error && updated) {
+      setData(prev => ({ ...prev, blogs: prev.blogs.map(b => b.id === id ? updated[0] : b) }));
+    }
+  };
+
   return (
     <AdminContext.Provider value={{
       data, loading,
       uploadImage,
       addGalleryImage, removeGalleryImage,
-      addTrainer, removeTrainer,
-      addCareer, removeCareer,
-      addService, removeService,
-      addBlog, removeBlog
+      addTrainer, removeTrainer, updateTrainer,
+      addCareer, removeCareer, updateCareer,
+      addService, removeService, updateService,
+      addBlog, removeBlog, updateBlog
     }}>
       {children}
     </AdminContext.Provider>
