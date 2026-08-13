@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
-import ClassSchedule from '../components/ClassSchedule';
-import BmiCalculator from '../components/BmiCalculator';
 import SEO from '../components/SEO';
 import { supabase } from '../supabaseClient';
 import { Building2, Users, Trophy, Target, ArrowRight, Dumbbell, Activity, Heart } from 'lucide-react';
