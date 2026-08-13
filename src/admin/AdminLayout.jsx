@@ -26,10 +26,47 @@ const AdminLayout = () => {
   }, [location.pathname]);
 
   useEffect(() => {
+    // Request Desktop Notification Permission
+    if ("Notification" in window && Notification.permission !== "granted") {
+      Notification.requestPermission();
+    }
+
+    const playNotificationSound = () => {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // A5 note
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        
+        oscillator.start();
+        gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 0.5);
+        oscillator.stop(audioCtx.currentTime + 0.5);
+      } catch (e) {
+        console.error("Audio play failed:", e);
+      }
+    };
+
     const handleNewBooking = (e) => {
       const newBooking = e.detail;
       
-      // Show Toast Notification
+      // 1. Play Sound
+      playNotificationSound();
+
+      // 2. Desktop Notification
+      if ("Notification" in window && Notification.permission === "granted") {
+        new Notification("New Booking Request!", {
+          body: `${newBooking.email} (${newBooking.mobile})`,
+          icon: '/logo.png'
+        });
+      }
+
+      // 3. Show Toast Notification
       toast.info(`New Booking: ${newBooking.email} (${newBooking.mobile})`, {
         position: "top-right",
         autoClose: 5000,
