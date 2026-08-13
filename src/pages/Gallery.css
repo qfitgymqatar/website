@@ -44,3 +44,13 @@
 .gallery-item:hover .gallery-overlay {
   opacity: 0.1;
 }
+
+@media (max-width: 768px) {
+  .gallery-grid {
+    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+  .gallery-item {
+    height: 180px;
+  }
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useAdmin } from '../context/AdminContext';
 import PageBanner from '../components/PageBanner';
 import './Blogs.css';
@@ -25,7 +26,7 @@ const Blogs = () => {
                 <h3>{blog.title}</h3>
                 <h4 className="blog-subtitle">{blog.subtitle}</h4>
                 <p>{blog.content}</p>
-                <button className="btn-primary" style={{marginTop: '20px', padding: '10px 20px', fontSize: '0.9rem'}}>Read More</button>
+                <Link to={`/blog/${blog.id}`} className="btn-primary" style={{marginTop: '20px', padding: '10px 20px', fontSize: '0.9rem', alignSelf: 'flex-start', textDecoration: 'none'}}>Read More</Link>
               </div>
             </div>
           ))}

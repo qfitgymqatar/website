@@ -16,6 +16,7 @@ import Gallery from './pages/Gallery'
 import Contact from './pages/Contact'
 import Booking from './pages/Booking'
 import Blogs from './pages/Blogs'
+import BlogDetails from './pages/BlogDetails'
 import NotFound from './pages/NotFound'
 import './App.css'
 
@@ -43,6 +44,7 @@ function App() {
                   <Route path="/trainer/:id" element={<TrainerDetails />} />
                   <Route path="/careers" element={<Careers />} />
                   <Route path="/blogs" element={<Blogs />} />
+                  <Route path="/blog/:id" element={<BlogDetails />} />
                   <Route path="/contact" element={<Contact />} />
                   <Route path="/booking" element={<Booking />} />
                   <Route path="*" element={<NotFound />} />

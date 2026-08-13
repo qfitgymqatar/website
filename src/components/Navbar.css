@@ -106,7 +106,20 @@
   cursor: pointer;
 }
 
+@media (max-width: 1024px) {
+  .nav-links {
+    gap: 15px;
+  }
+  .nav-links a {
+    font-size: 0.95rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .logo-img {
+    height: 60px;
+  }
+
   .nav-links {
     position: fixed;
     top: var(--nav-height);
