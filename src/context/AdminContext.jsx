@@ -11,19 +11,21 @@ export const AdminProvider = ({ children }) => {
     trainers: [],
     careers: [],
     services: [],
-    blogs: []
+    blogs: [],
+    bookings: []
   });
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [galleryRes, trainersRes, careersRes, servicesRes, blogsRes] = await Promise.all([
+      const [galleryRes, trainersRes, careersRes, servicesRes, blogsRes, bookingsRes] = await Promise.all([
         supabase.from('gallery').select('*').order('created_at', { ascending: false }),
         supabase.from('trainers').select('*').order('created_at', { ascending: false }),
         supabase.from('careers').select('*').order('created_at', { ascending: false }),
         supabase.from('services').select('*').order('created_at', { ascending: false }),
-        supabase.from('blogs').select('*').order('created_at', { ascending: false })
+        supabase.from('blogs').select('*').order('created_at', { ascending: false }),
+        supabase.from('bookings').select('*').order('created_at', { ascending: false })
       ]);
 
       setData({
@@ -31,7 +33,8 @@ export const AdminProvider = ({ children }) => {
         trainers: trainersRes.data || [],
         careers: careersRes.data || [],
         services: servicesRes.data || [],
-        blogs: blogsRes.data || []
+        blogs: blogsRes.data || [],
+        bookings: bookingsRes.data || []
       });
     } catch (error) {
       console.error("Error fetching data:", error);

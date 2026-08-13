@@ -7,6 +7,7 @@ import AdminTrainers from './AdminTrainers';
 import AdminCareers from './AdminCareers';
 import AdminServices from './AdminServices';
 import AdminBlogs from './AdminBlogs';
+import AdminBookings from './AdminBookings';
 import './AdminLayout.css';
 
 const AdminLayout = () => {
@@ -20,6 +21,7 @@ const AdminLayout = () => {
     { path: '/admin/services', icon: <Dumbbell size={20} />, label: 'Services' },
     { path: '/admin/careers', icon: <Briefcase size={20} />, label: 'Careers' },
     { path: '/admin/blogs', icon: <FileText size={20} />, label: 'Blogs' },
+    { path: '/admin/bookings', icon: <FileText size={20} />, label: 'Bookings' },
   ];
 
   return (
@@ -73,6 +75,7 @@ const AdminLayout = () => {
             <Route path="/services" element={<AdminServices />} />
             <Route path="/careers" element={<AdminCareers />} />
             <Route path="/blogs" element={<AdminBlogs />} />
+            <Route path="/bookings" element={<AdminBookings />} />
           </Routes>
         </div>
       </main>

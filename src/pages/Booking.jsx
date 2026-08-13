@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { supabase } from '../supabaseClient';
 import './Booking.css';
 
 const Booking = () => {
@@ -7,14 +8,38 @@ const Booking = () => {
   const [membershipNo, setMembershipNo] = useState('');
   const [qidNo, setQidNo] = useState('');
 
-  const handleSubmit = (e) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!emailId || !mobileNo) {
       alert('Please enter your Email and Mobile Number to proceed.');
       return;
     }
-    // Proceed with booking logic here
-    alert('Appointment requested successfully! (Frontend Demo)');
+    
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase.from('bookings').insert([{
+        email: emailId,
+        mobile: mobileNo,
+        membership: membershipNo,
+        qid: qidNo
+      }]);
+      
+      if (error) throw error;
+      
+      alert('Appointment requested successfully! We will contact you soon.');
+      setEmailId('');
+      setMobileNo('');
+      setMembershipNo('');
+      setQidNo('');
+    } catch (error) {
+      console.error('Error submitting booking:', error);
+      alert('There was an error submitting your booking. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -79,8 +104,8 @@ const Booking = () => {
             />
           </div>
 
-          <button type="submit" className="btn-primary submit-btn">
-            Proceed / متابعة
+          <button type="submit" className="btn-primary submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? 'Processing...' : 'Proceed / متابعة'}
           </button>
         </form>
 
