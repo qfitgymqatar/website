@@ -59,9 +59,15 @@
   margin-bottom: 20px;
 }
 
+.password-group {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
 .admin-login-form input {
   width: 100%;
-  padding: 12px 15px;
+  padding: 12px 45px 12px 15px; /* Add right padding for the icon */
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
@@ -74,6 +80,24 @@
   outline: none;
   border-color: var(--primary);
   background: rgba(255, 255, 255, 0.1);
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: color 0.3s ease;
+}
+
+.password-toggle-btn:hover {
+  color: var(--primary);
 }
 
 .admin-login-error {

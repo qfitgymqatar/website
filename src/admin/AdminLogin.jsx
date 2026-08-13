@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import './AdminLogin.css';
 
 const AdminLogin = ({ onLogin }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const correctPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'admin123';
+    const correctPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'Qfit@2026';
     
     if (password === correctPassword) {
       setError('');
@@ -28,15 +30,22 @@ const AdminLogin = ({ onLogin }) => {
         </div>
 
         <form onSubmit={handleSubmit} className="admin-login-form">
-          <div className="form-group">
+          <div className="form-group password-group">
             <input 
-              type="password" 
+              type={showPassword ? "text" : "password"} 
               placeholder="Enter Password" 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoFocus
               required
             />
+            <button 
+              type="button" 
+              className="password-toggle-btn"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
           </div>
           {error && <div className="admin-login-error">{error}</div>}
           
