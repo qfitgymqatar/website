@@ -9,7 +9,9 @@ const AdminLogin = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const correctPassword = import.meta.env.VITE_ADMIN_PASSWORD || 'Qfit@2026';
+    
+    // Using hardcoded password to ensure no Vercel environment variable conflicts
+    const correctPassword = 'Qfit@2026';
     
     if (password === correctPassword) {
       setError('');
