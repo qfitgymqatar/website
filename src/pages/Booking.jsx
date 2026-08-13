@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
 import emailjs from '@emailjs/browser';
+import SEO from '../components/SEO';
 import './Booking.css';
 
 const Booking = () => {
@@ -12,6 +13,7 @@ const Booking = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
+    // ... logic remains
     e.preventDefault();
     if (!emailId || !mobileNo) {
       alert('Please enter your Email and Mobile Number to proceed.');
@@ -65,6 +67,11 @@ const Booking = () => {
 
   return (
     <div className="booking-page" style={{ backgroundImage: "url('/hero-cinematic.jpg')" }}>
+      <SEO 
+        title="Book an Appointment"
+        description="Book your fitness consultation or gym tour at QFit Gym Qatar today."
+        url="/booking"
+      />
       <div className="booking-overlay"></div>
       
       <div className="booking-container">

@@ -12,8 +12,8 @@ const HeroSection = () => {
         <h1>UNLEASH YOUR <br/><span className="text-blue">POTEN</span><span className="text-red">TIAL</span></h1>
         <p>Experience the ultimate fitness journey in Mansoura, Qatar. State-of-the-art equipment, expert trainers, and dedicated spaces for everyone.</p>
         <div className="hero-btns">
-          <button className="btn-primary">Start Free Trial</button>
-          <button className="btn-secondary">Explore Facilities</button>
+          <button className="btn-primary" onClick={() => window.location.href='/booking'}>JOIN NOW</button>
+          <button className="btn-secondary" onClick={() => window.location.href='/services'}>SERVICES</button>
         </div>
       </div>
     </div>

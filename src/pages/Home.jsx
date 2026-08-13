@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import HeroSection from '../components/HeroSection';
-import { Dumbbell, ArrowRight, Activity, Users, Heart } from 'lucide-react';
+import ClassSchedule from '../components/ClassSchedule';
+import BmiCalculator from '../components/BmiCalculator';
+import SEO from '../components/SEO';
+import { supabase } from '../supabaseClient';
+import { Building2, Users, Trophy, Target, ArrowRight, Dumbbell, Activity, Heart } from 'lucide-react';
 import './Home.css';
 
 const Home = () => {
+  const [trainers, setTrainers] = useState([]);
+
+  useEffect(() => {
+    fetchTrainers();
+  }, []);
+
+  const fetchTrainers = async () => {
+    const { data } = await supabase.from('trainers').select('*').limit(3);
+    if (data) setTrainers(data);
+  };
+
   const whyJoinFeatures = [
     "Open 19 hours per day",
     "Top of the line Equipment",
@@ -16,6 +31,11 @@ const Home = () => {
 
   return (
     <div className="home-page">
+      <SEO 
+        title="Home"
+        description="Join QFit Gym in Mansoura, Qatar. Premium fitness center featuring state-of-the-art equipment, certified personal trainers, and dedicated ladies & gents sections."
+        url="/"
+      />
       <HeroSection />
 
       {/* WHY JOIN SECTION */}
