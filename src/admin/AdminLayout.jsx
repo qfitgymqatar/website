@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, Briefcase, Dumbbell, Image as ImageIcon, FileText, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Users, Briefcase, Dumbbell, Image as ImageIcon, FileText, LogOut, Menu, X, Bell } from 'lucide-react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import AdminDashboard from './AdminDashboard';
 import AdminGallery from './AdminGallery';
 import AdminTrainers from './AdminTrainers';
@@ -12,7 +15,40 @@ import './AdminLayout.css';
 
 const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [unreadBookings, setUnreadBookings] = useState(0);
   const location = useLocation();
+
+  useEffect(() => {
+    // Reset unread count if we visit the bookings page
+    if (location.pathname === '/admin/bookings') {
+      setUnreadBookings(0);
+    }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleNewBooking = (e) => {
+      const newBooking = e.detail;
+      
+      // Show Toast Notification
+      toast.info(`New Booking: ${newBooking.email} (${newBooking.mobile})`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
+      });
+
+      // Increment badge if we are not currently on the bookings page
+      if (window.location.pathname !== '/admin/bookings') {
+        setUnreadBookings(prev => prev + 1);
+      }
+    };
+
+    window.addEventListener('new-booking', handleNewBooking);
+    return () => window.removeEventListener('new-booking', handleNewBooking);
+  }, []);
 
   const navItems = [
     { path: '/admin', icon: <LayoutDashboard size={20} />, label: 'Dashboard' },
@@ -21,11 +57,12 @@ const AdminLayout = () => {
     { path: '/admin/services', icon: <Dumbbell size={20} />, label: 'Services' },
     { path: '/admin/careers', icon: <Briefcase size={20} />, label: 'Careers' },
     { path: '/admin/blogs', icon: <FileText size={20} />, label: 'Blogs' },
-    { path: '/admin/bookings', icon: <FileText size={20} />, label: 'Bookings' },
+    { path: '/admin/bookings', icon: <div style={{position: 'relative'}}><FileText size={20} />{unreadBookings > 0 && <span style={{position: 'absolute', top: '-5px', right: '-8px', background: 'red', color: 'white', fontSize: '0.65rem', padding: '2px 5px', borderRadius: '10px', fontWeight: 'bold'}}>{unreadBookings}</span>}</div>, label: 'Bookings' },
   ];
 
   return (
     <div className="admin-layout">
+      <ToastContainer />
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && <div className="admin-overlay" onClick={() => setSidebarOpen(false)}></div>}
 

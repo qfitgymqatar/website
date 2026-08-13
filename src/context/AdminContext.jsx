@@ -45,6 +45,23 @@ export const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     fetchData();
+
+    // Subscribe to realtime bookings
+    const bookingsSubscription = supabase.channel('public:bookings')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'bookings' }, payload => {
+        setData(prev => ({
+          ...prev,
+          bookings: [payload.new, ...prev.bookings]
+        }));
+        
+        // Dispatch custom event for the toast notification
+        window.dispatchEvent(new CustomEvent('new-booking', { detail: payload.new }));
+      })
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(bookingsSubscription);
+    };
   }, []);
 
   const addGalleryImage = async (galleryData) => {

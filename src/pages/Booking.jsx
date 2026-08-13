@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../supabaseClient';
+import emailjs from '@emailjs/browser';
 import './Booking.css';
 
 const Booking = () => {
@@ -29,6 +30,26 @@ const Booking = () => {
       
       if (error) throw error;
       
+      // Try to send EmailJS notification
+      try {
+        const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+        const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+        const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+        
+        if (serviceId && templateId && publicKey) {
+          await emailjs.send(serviceId, templateId, {
+            to_name: 'Admin',
+            from_email: emailId,
+            mobile_no: mobileNo,
+            membership_no: membershipNo || 'N/A',
+            qid_no: qidNo || 'N/A',
+            message: `New booking request from ${emailId} (${mobileNo})`
+          }, publicKey);
+        }
+      } catch (emailError) {
+        console.error("EmailJS error (non-fatal):", emailError);
+      }
+
       alert('Appointment requested successfully! We will contact you soon.');
       setEmailId('');
       setMobileNo('');
