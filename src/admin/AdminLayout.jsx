@@ -12,11 +12,19 @@ import AdminCareers from './AdminCareers';
 import AdminServices from './AdminServices';
 import AdminBlogs from './AdminBlogs';
 import AdminBookings from './AdminBookings';
+import AdminLogin from './AdminLogin';
 import './AdminLayout.css';
 
 const AdminLayout = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [unreadBookings, setUnreadBookings] = useState(0);
+  
+  useEffect(() => {
+    if (localStorage.getItem('qfit_admin_auth') === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
   const location = useLocation();
   const { data } = useAdmin();
 
@@ -103,6 +111,13 @@ const AdminLayout = () => {
     { path: '/admin/bookings', icon: <div style={{position: 'relative'}}><FileText size={20} />{unreadBookings > 0 && <span style={{position: 'absolute', top: '-5px', right: '-8px', background: 'red', color: 'white', fontSize: '0.65rem', padding: '2px 5px', borderRadius: '10px', fontWeight: 'bold'}}>{unreadBookings}</span>}</div>, label: 'Bookings' },
   ];
 
+  if (!isAuthenticated) {
+    return <AdminLogin onLogin={() => {
+      localStorage.setItem('qfit_admin_auth', 'true');
+      setIsAuthenticated(true);
+    }} />;
+  }
+
   return (
     <div className="admin-layout">
       <ToastContainer />
@@ -131,10 +146,15 @@ const AdminLayout = () => {
         </nav>
 
         <div className="admin-logout">
-          <Link to="/">
+          <a href="/" onClick={(e) => {
+            e.preventDefault();
+            localStorage.removeItem('qfit_admin_auth');
+            setIsAuthenticated(false);
+            window.location.href = '/';
+          }}>
             <LogOut size={20} />
-            <span>Exit to Website</span>
-          </Link>
+            <span>Logout & Exit</span>
+          </a>
         </div>
       </aside>
 
