@@ -1,5 +1,6 @@
 import React from 'react';
 import { useAdmin } from '../context/AdminContext';
+import { Link } from 'react-router-dom';
 import PageBanner from '../components/PageBanner';
 import './Trainers.css';
 
@@ -16,26 +17,16 @@ const Trainers = () => {
       <div className="content-wrapper">
         <div className="trainers-grid">
           {data.trainers.map((trainer) => (
-            <div key={trainer.id} className="trainer-card">
+            <Link to={`/trainer/${trainer.id}`} key={trainer.id} className="trainer-card" style={{textDecoration: 'none'}}>
               <div className="trainer-img-wrapper">
-                <img src={trainer.img || '/logo.png'} alt={trainer.name} className="trainer-img" />
+                <img src={trainer.img || '/trainer.jpg'} alt={trainer.name} className="trainer-img" />
                 <div className="trainer-glow"></div>
               </div>
-              <div className="trainer-info">
-                <h3>{trainer.name}</h3>
-                <h4 className="trainer-role">{trainer.role}</h4>
-                <div className="trainer-stats">
-                  <div className="stat">
-                    <span className="stat-label">Experience</span>
-                    <span className="stat-value">{trainer.exp}</span>
-                  </div>
-                  <div className="stat">
-                    <span className="stat-label">Qualification</span>
-                    <span className="stat-value">{trainer.qual}</span>
-                  </div>
-                </div>
+              <div className="trainer-info" style={{padding: '25px 20px', textAlign: 'center'}}>
+                <h3 style={{marginBottom: '5px', fontSize: '1.4rem', color: '#fff'}}>{trainer.name}</h3>
+                <h4 className="trainer-role" style={{fontSize: '0.95rem'}}>{trainer.role}</h4>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

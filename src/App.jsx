@@ -8,6 +8,7 @@ import ScrollToTop from './components/ScrollToTop'
 import WhatsAppButton from './components/WhatsAppButton'
 import Home from './pages/Home'
 import Trainers from './pages/Trainers'
+import TrainerDetails from './pages/TrainerDetails'
 import Careers from './pages/Careers'
 import Services from './pages/Services'
 import Packages from './pages/Packages'
@@ -39,6 +40,7 @@ function App() {
                   <Route path="/packages" element={<Packages />} />
                   <Route path="/gallery" element={<Gallery />} />
                   <Route path="/trainers" element={<Trainers />} />
+                  <Route path="/trainer/:id" element={<TrainerDetails />} />
                   <Route path="/careers" element={<Careers />} />
                   <Route path="/blogs" element={<Blogs />} />
                   <Route path="/contact" element={<Contact />} />

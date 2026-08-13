@@ -17,8 +17,10 @@ const Gallery = () => {
         <div className="gallery-grid">
           {data.gallery.map((img) => (
             <div key={img.id} className="gallery-item">
-              <img src={img.url} alt="QFit Gallery" loading="lazy" />
-              <div className="gallery-overlay"></div>
+              <img src={img.url} alt={img.title || "QFit Gallery"} loading="lazy" />
+              <div className="gallery-overlay">
+                {img.title && <h3 className="gallery-title" style={{color: 'white', position: 'absolute', bottom: '20px', left: '20px', margin: 0, textShadow: '0 2px 10px rgba(0,0,0,0.8)'}}>{img.title}</h3>}
+              </div>
             </div>
           ))}
         </div>

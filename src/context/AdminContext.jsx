@@ -44,8 +44,8 @@ export const AdminProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  const addGalleryImage = async (url) => {
-    const { data: newRow, error } = await supabase.from('gallery').insert([{ url }]).select();
+  const addGalleryImage = async (galleryData) => {
+    const { data: newRow, error } = await supabase.from('gallery').insert([galleryData]).select();
     if (!error && newRow) {
       setData(prev => ({ ...prev, gallery: [newRow[0], ...prev.gallery] }));
     }
@@ -88,6 +88,18 @@ export const AdminProvider = ({ children }) => {
     setData(prev => ({ ...prev, services: prev.services.filter(s => s.id !== id) }));
   };
 
+  const uploadImage = async (file) => {
+    if (!file) return null;
+    const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+    const { data, error } = await supabase.storage.from('qfit-images').upload(fileName, file);
+    if (error) {
+      console.error("Upload error:", error);
+      return null;
+    }
+    const { data: publicUrlData } = supabase.storage.from('qfit-images').getPublicUrl(fileName);
+    return publicUrlData.publicUrl;
+  };
+
   const addBlog = async (blog) => {
     const { data: newRow, error } = await supabase.from('blogs').insert([{ ...blog, date: new Date().toLocaleDateString() }]).select();
     if (!error && newRow) {
@@ -102,6 +114,7 @@ export const AdminProvider = ({ children }) => {
   return (
     <AdminContext.Provider value={{
       data, loading,
+      uploadImage,
       addGalleryImage, removeGalleryImage,
       addTrainer, removeTrainer,
       addCareer, removeCareer,
