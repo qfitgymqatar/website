@@ -18,7 +18,7 @@ const Services = () => {
         <div className="services-grid">
           {data.services.map((service) => (
             <div key={service.id} className="service-card" style={{ backgroundImage: `url(${service.img || '/hero-energetic.jpg'})` }}>
-              <div className="service-overlay"></div>
+              <div className="service-card-overlay"></div>
               <div className="service-content">
                 <h3 className="service-title">{service.title}</h3>
                 <p className="service-desc">{service.desc}</p>

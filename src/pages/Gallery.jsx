@@ -15,9 +15,9 @@ const Gallery = () => {
       />
       <div className="content-wrapper">
         <div className="gallery-grid">
-          {data.gallery.map((imgUrl, index) => (
-            <div key={index} className="gallery-item">
-              <img src={imgUrl} alt={`QFit Gallery ${index + 1}`} loading="lazy" />
+          {data.gallery.map((img) => (
+            <div key={img.id} className="gallery-item">
+              <img src={img.url} alt="QFit Gallery" loading="lazy" />
               <div className="gallery-overlay"></div>
             </div>
           ))}

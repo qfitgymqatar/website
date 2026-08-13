@@ -29,11 +29,11 @@ const AdminGallery = () => {
       <div className="admin-card">
         <h3 style={{marginBottom: '20px'}}>Gallery Preview</h3>
         <div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '20px'}}>
-          {data.gallery.map((img, idx) => (
-            <div key={idx} style={{position: 'relative', height: '150px', borderRadius: '10px', overflow: 'hidden'}}>
-              <img src={img} alt={`Gallery ${idx}`} style={{width: '100%', height: '100%', objectFit: 'cover'}} />
+          {data.gallery.map((img) => (
+            <div key={img.id} style={{position: 'relative', height: '150px', borderRadius: '10px', overflow: 'hidden'}}>
+              <img src={img.url} alt="Gallery" style={{width: '100%', height: '100%', objectFit: 'cover'}} />
               <button 
-                onClick={() => removeGalleryImage(idx)}
+                onClick={() => removeGalleryImage(img.id)}
                 style={{position: 'absolute', top: '10px', right: '10px', background: 'rgba(230,0,38,0.9)', color: 'white', border: 'none', borderRadius: '50%', width: '30px', height: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center', cursor: 'pointer'}}
               >
                 <Trash2 size={16} />
