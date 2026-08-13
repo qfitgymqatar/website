@@ -23,29 +23,15 @@ import './App.css'
 
 function App() {
   return (
-              <Navbar />
-              <main className="main-content">
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/about" element={<Home />} />
-                  <Route path="/services" element={<Services />} />
-                  <Route path="/packages" element={<Packages />} />
-                  <Route path="/gallery" element={<Gallery />} />
-                  <Route path="/trainers" element={<Trainers />} />
-                  <Route path="/trainer/:id" element={<TrainerDetails />} />
-                  <Route path="/careers" element={<Careers />} />
-                  <Route path="/blogs" element={<Blogs />} />
-                  <Route path="/blog/:id" element={<BlogDetails />} />
-                  <Route path="/contact" element={<Contact />} />
-                  <Route path="/booking" element={<Booking />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
     <HelmetProvider>
       <AdminProvider>
         <Router>
           <ScrollToTop />
           <Routes>
+            {/* Admin Portal Routes (No Header/Footer) */}
             <Route path="/admin/*" element={<AdminLayout />} />
+
+            {/* Main Public Website Routes */}
             <Route path="/*" element={
               <div className="app-container">
                 <Navbar />
