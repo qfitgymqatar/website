@@ -1,0 +1,87 @@
+.hero-container {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: calc(var(--nav-height) * -1);
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/hero-cinematic.jpg') center/cover no-repeat;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+  animation: slowZoom 20s infinite alternate;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.7) 0%,
+    rgba(10, 10, 10, 0.4) 50%,
+    rgba(10, 10, 10, 0.95) 100%
+  );
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 800px;
+  padding: 0 20px;
+  z-index: 1;
+  margin-top: var(--nav-height); /* Offset for nav on mobile */
+}
+
+.hero-content h1 {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  margin-bottom: 20px;
+  line-height: 1.1;
+  text-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+}
+
+.hero-content p {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  color: var(--text-main);
+  margin-bottom: 40px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+.hero-btns {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+@keyframes slowZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.1); }
+}
+
+@media (max-width: 768px) {
+  .hero-btns {
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+  .hero-btns button {
+    width: 100%;
+  }
+}
