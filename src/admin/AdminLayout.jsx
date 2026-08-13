@@ -3,6 +3,7 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { LayoutDashboard, Users, Briefcase, Dumbbell, Image as ImageIcon, FileText, LogOut, Menu, X, Bell } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useAdmin } from '../context/AdminContext';
 
 import AdminDashboard from './AdminDashboard';
 import AdminGallery from './AdminGallery';
@@ -17,13 +18,23 @@ const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [unreadBookings, setUnreadBookings] = useState(0);
   const location = useLocation();
+  const { data } = useAdmin();
 
   useEffect(() => {
-    // Reset unread count if we visit the bookings page
     if (location.pathname === '/admin/bookings') {
+      localStorage.setItem('last_read_bookings', new Date().toISOString());
       setUnreadBookings(0);
+    } else if (data.bookings && data.bookings.length > 0) {
+      const lastRead = localStorage.getItem('last_read_bookings');
+      if (!lastRead) {
+        setUnreadBookings(data.bookings.length);
+      } else {
+        const lastReadDate = new Date(lastRead);
+        const unread = data.bookings.filter(b => b.created_at && new Date(b.created_at) > lastReadDate).length;
+        setUnreadBookings(unread);
+      }
     }
-  }, [location.pathname]);
+  }, [location.pathname, data.bookings]);
 
   useEffect(() => {
     // Request Desktop Notification Permission
@@ -76,11 +87,6 @@ const AdminLayout = () => {
         draggable: true,
         theme: "dark",
       });
-
-      // Increment badge if we are not currently on the bookings page
-      if (window.location.pathname !== '/admin/bookings') {
-        setUnreadBookings(prev => prev + 1);
-      }
     };
 
     window.addEventListener('new-booking', handleNewBooking);
