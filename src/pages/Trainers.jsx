@@ -19,7 +19,7 @@ const Trainers = () => {
           {data.trainers.map((trainer) => (
             <Link to={`/trainer/${trainer.id}`} key={trainer.id} className="trainer-card" style={{textDecoration: 'none'}}>
               <div className="trainer-img-wrapper">
-                <img src={trainer.img || '/trainer.jpg'} alt={trainer.name} className="trainer-img" />
+                <img src={trainer.img || '/trainer.jpg'} alt={trainer.name} className="trainer-img" onError={(e) => { e.target.src = '/hero-sports.jpg' }} />
                 <div className="trainer-glow"></div>
               </div>
               <div className="trainer-info" style={{padding: '25px 20px', textAlign: 'center'}}>
