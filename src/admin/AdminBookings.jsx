@@ -63,7 +63,7 @@ const AdminBookings = () => {
     };
 
     const rows = filteredBookings.map(b => [
-      new Date(b.created_at).toLocaleString(),
+      escapeCSV(new Date(b.created_at).toLocaleString()),
       escapeCSV(b.email),
       escapeCSV(b.mobile),
       escapeCSV(b.membership || 'N/A'),
