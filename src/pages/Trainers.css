@@ -1,130 +1,35 @@
 .trainers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 40px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
 }
 
-.trainer-premium-card {
-  background: linear-gradient(145deg, rgba(20, 20, 20, 0.9), rgba(10, 10, 10, 0.95));
-  border-radius: 20px;
-  border: 1px solid rgba(0, 102, 204, 0.15); /* Updated to new blue */
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+.trainer-card {
   position: relative;
+  border-radius: 15px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 750px;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s ease, box-shadow 0.4s ease;
+  justify-content: flex-end;
+  min-height: 450px;
+  background: #0a0a0a;
+  transition: transform 0.4s ease, border-color 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.trainer-premium-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: -100%;
-  width: 50%; height: 100%;
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0) 100%);
-  transform: skewX(-25deg);
-  transition: all 0.7s ease;
-  z-index: 3;
-  pointer-events: none;
-}
-
-.trainer-premium-card:hover::before {
-  left: 125%;
-}
-
-.trainer-premium-card:hover {
-  transform: translateY(-15px) scale(1.02);
-  border-color: rgba(230, 0, 38, 0.5); /* Shifts to red on hover */
-  box-shadow: 0 25px 55px rgba(0, 102, 204, 0.2);
-}
-
-.trainer-card-header {
-  padding: 30px;
-  background: rgba(0, 0, 0, 0.4);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  position: relative;
-  z-index: 2;
-}
-
-.header-icon {
-  color: var(--primary-cyan);
-  background: rgba(0, 242, 254, 0.1);
-  padding: 15px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.trainer-card-header h3 {
-  font-size: 1.8rem;
-  margin-bottom: 5px;
-  text-transform: uppercase;
-  color: #fff;
-}
-
-.trainer-role {
-  font-weight: 600;
-  font-size: 1rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.trainer-info-lists {
-  padding: 30px;
-  position: relative;
-  z-index: 2;
-  flex: 1;
-}
-
-.info-block {
-  margin-bottom: 25px;
-}
-
-.info-block h4 {
-  font-size: 1.1rem;
-  color: var(--primary-cyan);
-  margin-bottom: 15px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  border-bottom: 1px solid rgba(0, 242, 254, 0.2);
-  padding-bottom: 5px;
-  display: inline-block;
-}
-
-.info-block ul {
-  list-style: none;
-  padding: 0;
-}
-
-.info-block ul li {
-  color: #ccc;
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: flex-start;
-  line-height: 1.4;
-}
-
-.list-icon {
-  color: var(--accent-light);
-  margin-right: 10px;
-  flex-shrink: 0;
-  margin-top: 2px;
+.trainer-card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(0, 102, 204, 0.4);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
 .trainer-img-wrapper {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: 350px;
+  height: 100%;
   z-index: 1;
-  margin-top: auto; /* Push to the very bottom of the card */
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .trainer-img-wrapper img {
@@ -132,37 +37,30 @@
   height: 100%;
   object-fit: cover;
   object-position: top center;
-  opacity: 0.85;
-  transition: opacity 0.3s ease, transform 0.5s ease;
+  transition: transform 0.5s ease;
 }
 
-.trainer-premium-card:hover .trainer-img-wrapper img {
-  opacity: 1;
+.trainer-card:hover .trainer-img-wrapper img {
   transform: scale(1.05);
 }
 
-.trainer-img-fade {
+.trainer-glow {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
-  height: 50px;
-  background: linear-gradient(to bottom, rgba(15, 15, 15, 1) 0%, rgba(15, 15, 15, 0) 100%);
+  height: 60%;
+  background: linear-gradient(to top, rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0) 100%);
+  z-index: 2;
 }
 
-@media (max-width: 768px) {
-  .trainer-premium-card {
-    min-height: auto;
-  }
-  .trainer-card-header {
-    flex-direction: column;
-    text-align: center;
-    padding: 25px 20px;
-  }
-  .trainer-info-lists {
-    padding: 20px;
-  }
-  .trainer-img-wrapper {
-    height: 300px;
-  }
+.trainer-info {
+  position: relative;
+  z-index: 3;
+}
+
+.trainer-role {
+  color: var(--primary-cyan);
+  font-weight: 600;
+  letter-spacing: 1px;
 }
