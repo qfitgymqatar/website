@@ -1,0 +1,3 @@
+module.exports=[7963,a=>{"use strict";let b=(0,a.i(64831).default)("chevron-left",[["path",{d:"m15 18-6-6 6-6",key:"1wnfg3"}]]);a.s(["ChevronLeft",0,b],7963)},66088,a=>{"use strict";a.i(87924),a.i(72131),a.i(38246),a.i(50944),a.i(14296),a.i(7963),(0,a.i(64831).default)("award",[["path",{d:"m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526",key:"1yiouv"}],["circle",{cx:"12",cy:"8",r:"6",key:"1vp47v"}]]);let b=Error("Cannot find module '@/pageStyles/TrainerDetails.css'");throw b.code="MODULE_NOT_FOUND",b}];
+
+//# sourceMappingURL=_05_b0rs._.js.map

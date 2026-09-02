@@ -1,5 +1,7 @@
+"use client";
+
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '@/supabaseClient';
 
 const AdminContext = createContext();
 

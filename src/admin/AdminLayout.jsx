@@ -1,9 +1,12 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';;
 import { LayoutDashboard, Users, Briefcase, Dumbbell, Image as ImageIcon, FileText, LogOut, Menu, X, Bell } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAdmin } from '../context/AdminContext';
+import { useAdmin } from '@/context/AdminContext';
 
 import AdminDashboard from './AdminDashboard';
 import AdminGallery from './AdminGallery';
@@ -15,7 +18,7 @@ import AdminBookings from './AdminBookings';
 import AdminLogin from './AdminLogin';
 import './AdminLayout.css';
 
-const AdminLayout = () => {
+const AdminLayout = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [unreadBookings, setUnreadBookings] = useState(0);
@@ -25,11 +28,11 @@ const AdminLayout = () => {
       setIsAuthenticated(true);
     }
   }, []);
-  const location = useLocation();
+  const pathname = usePathname();
   const { data } = useAdmin();
 
   useEffect(() => {
-    if (location.pathname === '/admin/bookings') {
+    if (pathname === '/admin/bookings') {
       localStorage.setItem('last_read_bookings', new Date().toISOString());
       setUnreadBookings(0);
     } else if (data.bookings && data.bookings.length > 0) {
@@ -42,7 +45,7 @@ const AdminLayout = () => {
         setUnreadBookings(unread);
       }
     }
-  }, [location.pathname, data.bookings]);
+  }, [pathname, data.bookings]);
 
   useEffect(() => {
     // Request Desktop Notification Permission
@@ -135,8 +138,8 @@ const AdminLayout = () => {
           {navItems.map(item => (
             <Link 
               key={item.path} 
-              to={item.path} 
-              className={`admin-nav-link ${location.pathname === item.path ? 'active' : ''}`}
+              href={item.path} 
+              className={`admin-nav-link ${pathname === item.path ? 'active' : ''}`}
               onClick={() => setSidebarOpen(false)}
             >
               {item.icon}
@@ -164,19 +167,11 @@ const AdminLayout = () => {
           <button className="mobile-toggle-btn" onClick={() => setSidebarOpen(true)}>
             <Menu size={24} />
           </button>
-          <h2>{navItems.find(item => item.path === location.pathname)?.label || 'Admin Panel'}</h2>
+          <h2>{navItems.find(item => item.path === pathname)?.label || 'Admin Panel'}</h2>
         </header>
 
         <div className="admin-content-scroll">
-          <Routes>
-            <Route path="/" element={<AdminDashboard />} />
-            <Route path="/gallery" element={<AdminGallery />} />
-            <Route path="/trainers" element={<AdminTrainers />} />
-            <Route path="/services" element={<AdminServices />} />
-            <Route path="/careers" element={<AdminCareers />} />
-            <Route path="/blogs" element={<AdminBlogs />} />
-            <Route path="/bookings" element={<AdminBookings />} />
-          </Routes>
+          {children}
         </div>
       </main>
     </div>

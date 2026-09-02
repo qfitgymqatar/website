@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 import './AdminLogin.css';
@@ -11,7 +13,7 @@ const AdminLogin = ({ onLogin }) => {
     e.preventDefault();
     
     // Using hardcoded password to ensure no Vercel environment variable conflicts
-    const correctPassword = 'Qfit@2026';
+    const correctPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'Qfit@2026';
     
     if (password === correctPassword) {
       setError('');

@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { MapPin, Phone, Mail, Globe } from 'lucide-react';
 import './Footer.css';

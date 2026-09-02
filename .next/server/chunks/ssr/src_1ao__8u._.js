@@ -1,0 +1,3 @@
+module.exports=[85737,a=>{"use strict";a.i(87924),a.i(72131),a.i(22255),a.i(87154);let b=Error("Cannot find module '@/pageStyles/Gallery.css'");throw b.code="MODULE_NOT_FOUND",b},87154,a=>{"use strict";var b=a.i(87924);a.i(72131),a.s(["default",0,({title:a,subtitle:c,bgImage:d})=>(0,b.jsxs)("div",{className:"page-banner",style:{backgroundImage:`url(${d})`},children:[(0,b.jsx)("div",{className:"banner-overlay"}),(0,b.jsxs)("div",{className:"banner-content animate-fade-in",children:[(0,b.jsx)("h1",{children:a}),c&&(0,b.jsx)("p",{children:c})]})]})])}];
+
+//# sourceMappingURL=src_1ao__8u._.js.map

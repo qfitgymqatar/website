@@ -1,5 +1,7 @@
+"use client";
+
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useRouter, usePathname } from 'next/navigation';;
 import { ChevronUp } from 'lucide-react';
 import './ScrollToTop.css';
 
