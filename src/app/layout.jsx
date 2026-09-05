@@ -1,5 +1,5 @@
 import { AdminProvider } from '@/context/AdminContext';
-import { GoogleTagManager } from '@next/third-parties/google';
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google';
 import '../index.css';
 import '../App.css';
 
@@ -20,6 +20,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <GoogleTagManager gtmId="GTM-KGZJ6BNN" />
+      <GoogleAnalytics gaId="G-PQLGTE1J04" />
       <body>
         <AdminProvider>
           {children}
