@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { useRouter, usePathname } from 'next/navigation';;
-import { ChevronUp } from 'lucide-react';
+import { usePathname } from 'next/navigation';
+import { ArrowUp } from 'lucide-react';
 import './ScrollToTop.css';
 
 const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const { pathname } = useLocation();
+  const pathname = usePathname();
 
   // Scroll to top on route change
   useEffect(() => {

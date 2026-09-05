@@ -1,0 +1,22 @@
+{
+  "/(public)/blog/[id]/page": "app/(public)/blog/[id]/page.js",
+  "/(public)/blogs/page": "app/(public)/blogs/page.js",
+  "/(public)/booking/page": "app/(public)/booking/page.js",
+  "/(public)/careers/page": "app/(public)/careers/page.js",
+  "/(public)/contact/page": "app/(public)/contact/page.js",
+  "/(public)/gallery/page": "app/(public)/gallery/page.js",
+  "/(public)/packages/page": "app/(public)/packages/page.js",
+  "/(public)/page": "app/(public)/page.js",
+  "/(public)/services/page": "app/(public)/services/page.js",
+  "/(public)/trainer/[id]/page": "app/(public)/trainer/[id]/page.js",
+  "/(public)/trainers/page": "app/(public)/trainers/page.js",
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/blogs/page": "app/admin/blogs/page.js",
+  "/admin/bookings/page": "app/admin/bookings/page.js",
+  "/admin/careers/page": "app/admin/careers/page.js",
+  "/admin/gallery/page": "app/admin/gallery/page.js",
+  "/admin/page": "app/admin/page.js",
+  "/admin/services/page": "app/admin/services/page.js",
+  "/admin/trainers/page": "app/admin/trainers/page.js"
+}
