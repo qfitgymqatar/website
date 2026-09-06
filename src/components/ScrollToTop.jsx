@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import { ArrowUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import './ScrollToTop.css';
 
 const ScrollToTop = () => {
