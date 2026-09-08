@@ -11,7 +11,7 @@ const Packages = () => {
     { title: '3 Month', price: 'QAR 650', features: ['Full Gym Access', 'Unlimited Group Classes', 'Locker & Shower Usage', 'Premium Fitness Assessment'], img: '/service-group.jpg' },
     { title: '6 Month', price: 'QAR 1200', features: ['Full Gym Access', 'Unlimited Group Classes', 'Advanced Body Composition', '30 Days Membership Freezing'], highlighted: true, img: '/service-weights.jpg' },
     { title: '1 Year', price: 'QAR 2100', features: ['Full Gym Access', 'All-Inclusive Amenities', 'Priority Class Booking', '45 Days Membership Freezing'], img: '/hero-premium.jpg' },
-    { title: 'Lifetime Member', price: 'QAR 15000', features: ['Free Access to all Gym Facilities', 'Lifetime Privileged Member Status', 'Complimentary Guest Passes', 'VIP Locker & Towel Service'], img: '/hero-architectural.jpg', wide: true }
+    { title: 'Lifetime Member', price: 'QAR 15000', features: ['Free Access to all Gym Facilities', 'Lifetime Privileged Member Status', 'Complimentary Guest Passes', 'VIP Locker & Towel Service'], img: '/hero-architectural.jpg' }
   ];
 
   const ptPackages = [
