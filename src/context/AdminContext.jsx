@@ -2,6 +2,7 @@
 
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { supabase } from '@/supabaseClient';
+import { compressImage } from '@/utils/imageHelper';
 
 const AdminContext = createContext();
 
@@ -66,99 +67,159 @@ export const AdminProvider = ({ children }) => {
     };
   }, []);
 
+  const uploadImage = async (file) => {
+    if (!file) return null;
+
+    // 1. First, attempt uploading to Supabase Storage bucket
+    try {
+      const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+      const { data, error } = await supabase.storage.from('qfit-images').upload(fileName, file);
+
+      if (!error && data) {
+        const { data: publicUrlData } = supabase.storage.from('qfit-images').getPublicUrl(fileName);
+        if (publicUrlData?.publicUrl) {
+          return publicUrlData.publicUrl;
+        }
+      }
+      console.warn("Supabase Storage upload error, falling back to local image compression:", error?.message || error);
+    } catch (storageErr) {
+      console.warn("Storage upload exception, falling back to compression:", storageErr);
+    }
+
+    // 2. Fallback: compress image to lightweight base64 data URI (~50-90KB)
+    try {
+      const compressedDataUri = await compressImage(file);
+      return compressedDataUri;
+    } catch (compressErr) {
+      console.error("Image compression failed:", compressErr);
+      return null;
+    }
+  };
+
   const addGalleryImage = async (galleryData) => {
     const { data: newRow, error } = await supabase.from('gallery').insert([galleryData]).select();
     if (!error && newRow) {
       setData(prev => ({ ...prev, gallery: [newRow[0], ...prev.gallery] }));
+      return { success: true, data: newRow[0] };
     }
+    return { success: false, error };
   };
+
   const removeGalleryImage = async (id) => {
-    await supabase.from('gallery').delete().eq('id', id);
-    setData(prev => ({ ...prev, gallery: prev.gallery.filter(g => g.id !== id) }));
+    const { error } = await supabase.from('gallery').delete().eq('id', id);
+    if (!error) {
+      setData(prev => ({ ...prev, gallery: prev.gallery.filter(g => g.id !== id) }));
+      return { success: true };
+    }
+    return { success: false, error };
   };
 
   const addTrainer = async (trainer) => {
     const { data: newRow, error } = await supabase.from('trainers').insert([trainer]).select();
     if (!error && newRow) {
       setData(prev => ({ ...prev, trainers: [newRow[0], ...prev.trainers] }));
+      return { success: true, data: newRow[0] };
     }
+    return { success: false, error };
   };
+
   const removeTrainer = async (id) => {
-    await supabase.from('trainers').delete().eq('id', id);
-    setData(prev => ({ ...prev, trainers: prev.trainers.filter(t => t.id !== id) }));
+    const { error } = await supabase.from('trainers').delete().eq('id', id);
+    if (!error) {
+      setData(prev => ({ ...prev, trainers: prev.trainers.filter(t => t.id !== id) }));
+      return { success: true };
+    }
+    return { success: false, error };
   };
 
   const addCareer = async (career) => {
     const { data: newRow, error } = await supabase.from('careers').insert([career]).select();
     if (!error && newRow) {
       setData(prev => ({ ...prev, careers: [newRow[0], ...prev.careers] }));
+      return { success: true, data: newRow[0] };
     }
+    return { success: false, error };
   };
+
   const removeCareer = async (id) => {
-    await supabase.from('careers').delete().eq('id', id);
-    setData(prev => ({ ...prev, careers: prev.careers.filter(c => c.id !== id) }));
+    const { error } = await supabase.from('careers').delete().eq('id', id);
+    if (!error) {
+      setData(prev => ({ ...prev, careers: prev.careers.filter(c => c.id !== id) }));
+      return { success: true };
+    }
+    return { success: false, error };
   };
 
   const addService = async (service) => {
     const { data: newRow, error } = await supabase.from('services').insert([service]).select();
     if (!error && newRow) {
       setData(prev => ({ ...prev, services: [newRow[0], ...prev.services] }));
+      return { success: true, data: newRow[0] };
     }
-  };
-  const removeService = async (id) => {
-    await supabase.from('services').delete().eq('id', id);
-    setData(prev => ({ ...prev, services: prev.services.filter(s => s.id !== id) }));
+    return { success: false, error };
   };
 
-  const uploadImage = async (file) => {
-    if (!file) return null;
-    const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
-    const { data, error } = await supabase.storage.from('qfit-images').upload(fileName, file);
-    if (error) {
-      console.error("Upload error:", error);
-      return null;
+  const removeService = async (id) => {
+    const { error } = await supabase.from('services').delete().eq('id', id);
+    if (!error) {
+      setData(prev => ({ ...prev, services: prev.services.filter(s => s.id !== id) }));
+      return { success: true };
     }
-    const { data: publicUrlData } = supabase.storage.from('qfit-images').getPublicUrl(fileName);
-    return publicUrlData.publicUrl;
+    return { success: false, error };
   };
 
   const addBlog = async (blog) => {
     const { data: newRow, error } = await supabase.from('blogs').insert([{ ...blog, date: new Date().toLocaleDateString() }]).select();
     if (!error && newRow) {
       setData(prev => ({ ...prev, blogs: [newRow[0], ...prev.blogs] }));
+      return { success: true, data: newRow[0] };
     }
+    return { success: false, error };
   };
+
   const removeBlog = async (id) => {
-    await supabase.from('blogs').delete().eq('id', id);
-    setData(prev => ({ ...prev, blogs: prev.blogs.filter(b => b.id !== id) }));
+    const { error } = await supabase.from('blogs').delete().eq('id', id);
+    if (!error) {
+      setData(prev => ({ ...prev, blogs: prev.blogs.filter(b => b.id !== id) }));
+      return { success: true };
+    }
+    return { success: false, error };
   };
 
   const updateTrainer = async (id, updates) => {
     const { data: updated, error } = await supabase.from('trainers').update(updates).eq('id', id).select();
     if (!error && updated) {
       setData(prev => ({ ...prev, trainers: prev.trainers.map(t => t.id === id ? updated[0] : t) }));
+      return { success: true, data: updated[0] };
     }
+    return { success: false, error };
   };
 
   const updateCareer = async (id, updates) => {
     const { data: updated, error } = await supabase.from('careers').update(updates).eq('id', id).select();
     if (!error && updated) {
       setData(prev => ({ ...prev, careers: prev.careers.map(c => c.id === id ? updated[0] : c) }));
+      return { success: true, data: updated[0] };
     }
+    return { success: false, error };
   };
 
   const updateService = async (id, updates) => {
     const { data: updated, error } = await supabase.from('services').update(updates).eq('id', id).select();
     if (!error && updated) {
       setData(prev => ({ ...prev, services: prev.services.map(s => s.id === id ? updated[0] : s) }));
+      return { success: true, data: updated[0] };
     }
+    return { success: false, error };
   };
 
   const updateBlog = async (id, updates) => {
     const { data: updated, error } = await supabase.from('blogs').update(updates).eq('id', id).select();
     if (!error && updated) {
       setData(prev => ({ ...prev, blogs: prev.blogs.map(b => b.id === id ? updated[0] : b) }));
+      return { success: true, data: updated[0] };
     }
+    return { success: false, error };
   };
 
   return (
@@ -175,3 +236,4 @@ export const AdminProvider = ({ children }) => {
     </AdminContext.Provider>
   );
 };
+
