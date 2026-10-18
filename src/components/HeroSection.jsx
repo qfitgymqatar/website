@@ -9,7 +9,7 @@ const HeroSection = () => {
     <div className="hero-container">
       <div className="hero-bg">
         <Image 
-          src="/hero-bg.jpg" 
+          src="/hero-gym.jpg" 
           alt="QFit Gym Interior" 
           fill
           priority
