@@ -105,11 +105,40 @@ export const AdminProvider = ({ children }) => {
     return { success: false, error };
   };
 
+  const addGalleryImages = async (galleryDataArray) => {
+    const { data: newRows, error } = await supabase.from('gallery').insert(galleryDataArray).select();
+    if (!error && newRows) {
+      setData(prev => ({ ...prev, gallery: [...newRows, ...prev.gallery] }));
+      return { success: true, data: newRows };
+    }
+    return { success: false, error };
+  };
+
   const removeGalleryImage = async (id) => {
     const { error } = await supabase.from('gallery').delete().eq('id', id);
     if (!error) {
       setData(prev => ({ ...prev, gallery: prev.gallery.filter(g => g.id !== id) }));
       return { success: true };
+    }
+    return { success: false, error };
+  };
+
+  const bulkDeleteGalleryImages = async (ids) => {
+    if (!ids || ids.length === 0) return { success: true };
+    const { error } = await supabase.from('gallery').delete().in('id', ids);
+    if (!error) {
+      const idSet = new Set(ids);
+      setData(prev => ({ ...prev, gallery: prev.gallery.filter(g => !idSet.has(g.id)) }));
+      return { success: true };
+    }
+    return { success: false, error };
+  };
+
+  const updateGalleryImage = async (id, updates) => {
+    const { data: updated, error } = await supabase.from('gallery').update(updates).eq('id', id).select();
+    if (!error && updated) {
+      setData(prev => ({ ...prev, gallery: prev.gallery.map(g => g.id === id ? updated[0] : g) }));
+      return { success: true, data: updated[0] };
     }
     return { success: false, error };
   };
@@ -226,7 +255,7 @@ export const AdminProvider = ({ children }) => {
     <AdminContext.Provider value={{
       data, loading,
       uploadImage,
-      addGalleryImage, removeGalleryImage,
+      addGalleryImage, addGalleryImages, removeGalleryImage, updateGalleryImage, bulkDeleteGalleryImages,
       addTrainer, removeTrainer, updateTrainer,
       addCareer, removeCareer, updateCareer,
       addService, removeService, updateService,
