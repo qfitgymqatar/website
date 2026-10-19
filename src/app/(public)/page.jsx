@@ -45,7 +45,7 @@ const Home = () => {
           </div>
           
           <div className="why-join-content">
-            <h2>WHY JOIN <span className="text-blue">QFIT</span> <span className="text-red">GYM?</span></h2>
+            <h2>WHY JOIN <span className="title-new">NEW</span> <span className="text-blue">QFIT</span> <span className="text-red">GYM?</span></h2>
             <div className="features-list">
               {whyJoinFeatures.map((feature, idx) => (
                 <div className="feature-item" key={idx}>
