@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { MapPin, Phone, Mail, Send, Globe } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/SocialIcons';
 import PageBanner from '@/components/PageBanner';
 import './Contact.css';
 
@@ -11,7 +12,7 @@ const Contact = () => {
       <PageBanner 
         title="Contact Us" 
         subtitle="We'd love to hear from you. Reach out for any inquiries." 
-        bgImage="/hero-architectural.jpg" 
+        bgImage="/hero-gym.jpg" 
       />
 
       <div className="content-wrapper">
@@ -32,13 +33,23 @@ const Contact = () => {
               </div>
 
               <div className="contact-item">
+                <div className="contact-icon" style={{ background: '#25d366', color: '#fff' }}>
+                   <WhatsAppIcon size={24} color="#ffffff" />
+                </div>
+                <div>
+                  <h4>WhatsApp Chat</h4>
+                  <p><a href="https://wa.me/97433279451?text=Hello,%20I%20am%20interested%20in%20joining%20QFit%20Gym!" target="_blank" rel="noopener noreferrer" style={{color: '#25d366', textDecoration: 'none', fontWeight: 600}}>+974 3327 9451 (Chat on WhatsApp)</a></p>
+                </div>
+              </div>
+
+              <div className="contact-item">
                 <div className="contact-icon">
                    <Phone size={24} />
                 </div>
                 <div>
                   <h4>Call Us</h4>
-                  <p>Gents GYM: +974 3327 9451</p>
-                  <p>Ladies GYM: +974 5035 0222</p>
+                  <p><a href="tel:+97433279451" style={{color: 'inherit', textDecoration: 'none'}}>Gents GYM: +974 3327 9451</a></p>
+                  <p><a href="tel:+97450350222" style={{color: 'inherit', textDecoration: 'none'}}>Ladies GYM: +974 5035 0222</a></p>
                 </div>
               </div>
 
@@ -48,7 +59,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4>Email Us</h4>
-                  <p>info@qfitgymqatar.com</p>
+                  <p><a href="mailto:info@qfitgymqatar.com" style={{color: 'inherit', textDecoration: 'none'}}>info@qfitgymqatar.com</a></p>
                 </div>
               </div>
 
@@ -58,7 +69,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h4>Website</h4>
-                  <p>www.qfitgymqatar.com</p>
+                  <p><a href="https://www.qfitgymqatar.com" target="_blank" rel="noopener noreferrer" style={{color: 'inherit', textDecoration: 'none'}}>www.qfitgymqatar.com</a></p>
                 </div>
               </div>
               
