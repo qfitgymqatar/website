@@ -27,18 +27,20 @@
 }
 
 .footer-logo-img {
-  max-width: 280px;
+  max-width: 290px;
   width: 100%;
   height: auto;
   display: block;
   object-fit: contain;
-  transition: transform 0.3s ease, filter 0.3s ease;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  border-radius: 8px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .footer-logo:hover .footer-logo-img {
   transform: translateY(-2px) scale(1.02);
-  filter: drop-shadow(0 6px 16px rgba(0, 102, 204, 0.3));
+  box-shadow: 0 6px 20px rgba(0, 102, 204, 0.3);
 }
 
 .footer-section h4 {
