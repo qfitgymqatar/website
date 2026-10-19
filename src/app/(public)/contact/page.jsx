@@ -37,8 +37,8 @@ const Contact = () => {
                    <WhatsAppIcon size={24} color="#ffffff" />
                 </div>
                 <div>
-                  <h4>WhatsApp Chat</h4>
-                  <p><a href="https://wa.me/97433279451?text=Hello,%20I%20am%20interested%20in%20joining%20QFit%20Gym!" target="_blank" rel="noopener noreferrer" style={{color: '#25d366', textDecoration: 'none', fontWeight: 600}}>+974 3327 9451 (Chat on WhatsApp)</a></p>
+                  <h4>WhatsApp</h4>
+                  <p><a href="https://wa.me/97433279451?text=Hello,%20I%20am%20interested%20in%20joining%20QFit%20Gym!" target="_blank" rel="noopener noreferrer" style={{color: '#25d366', textDecoration: 'none', fontWeight: 600}}>+974 3327 9451</a></p>
                 </div>
               </div>
 
