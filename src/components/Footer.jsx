@@ -18,7 +18,13 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
-          <h3 className="gradient-text">QFIT GYM</h3>
+          <Link href="/" className="footer-logo">
+            <img 
+              src="/footer-logo.png" 
+              alt="New Q Fit Gym" 
+              className="footer-logo-img" 
+            />
+          </Link>
           <p>The ultimate fitness destination in Qatar. Premium equipment, expert trainers, and separate facilities for gents and ladies.</p>
           <div className="social-icons">
             <a 
