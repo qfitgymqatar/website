@@ -21,7 +21,7 @@ const Home = () => {
   };
 
   const whyJoinFeatures = [
-    "Open 19 hours per day",
+    "Open 24 Hours a Day (Friday 4 PM - 10 PM)",
     "Top of the line Equipment",
     "Luxuries & Safe atmosphere",
     "Private Ladies Section",
