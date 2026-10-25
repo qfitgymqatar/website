@@ -50,10 +50,9 @@ const Home = () => {
               <span className="brand-title-wrap">
                 <span className="brand-title-qfit">
                   <span className="brand-title-new">NEW</span>
-                  <span className="text-red">Q FIT</span>
-                </span>
-                {' '}
-                <span className="text-blue">GYM</span>
+                  Q FIT
+                </span>{' '}
+                <span className="brand-title-gym">GYM</span>
               </span>{' '}
               DIFFERENCE
             </h2>

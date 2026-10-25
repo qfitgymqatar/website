@@ -67,31 +67,50 @@
   font-size: clamp(1.8rem, 3.2vw, 2.7rem);
   margin-bottom: 40px;
   text-transform: uppercase;
-  line-height: 1.35;
-  padding-top: 15px;
+  letter-spacing: 1px;
+  line-height: 1.4;
+  padding-top: 18px;
 }
 
 .brand-title-wrap {
+  position: relative;
   display: inline-block;
   font-style: italic;
   white-space: nowrap;
+  vertical-align: baseline;
 }
 
 .brand-title-qfit {
   position: relative;
   display: inline-block;
+  color: var(--primary-red);
+  font-style: italic;
+  font-weight: 800;
+  font-size: inherit;
+  line-height: 1.1;
 }
 
 .brand-title-new {
   position: absolute;
-  top: -0.48em;
-  left: 0;
-  font-size: 0.32em;
+  bottom: calc(100% - 8px);
+  left: 2px;
+  font-size: 0.35em;
   font-weight: 900;
   color: var(--primary-red);
   letter-spacing: 0.5px;
   line-height: 1;
   font-style: italic;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.brand-title-gym {
+  display: inline-block;
+  color: var(--primary-blue);
+  font-style: italic;
+  font-weight: 800;
+  font-size: inherit;
+  line-height: 1.1;
 }
 
 .features-list {
@@ -244,6 +263,11 @@
 }
 
 @media (max-width: 480px) {
+  .why-join-content h2 {
+    font-size: clamp(1.4rem, 6vw, 1.85rem);
+    line-height: 1.35;
+    padding-top: 16px;
+  }
   .mobile-icon {
     display: none;
   }

@@ -572,7 +572,7 @@
   color: var(--primary-cyan) !important;
 }
 
-.text-red {
+.summary-value.text-red {
   color: var(--primary-red) !important;
   font-size: 1.25rem !important;
 }
