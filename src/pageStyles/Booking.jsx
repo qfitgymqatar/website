@@ -8,6 +8,7 @@ import {
   Building2, 
   Banknote, 
   CheckCircle, 
+  Check,
   ArrowRight, 
   ShieldCheck, 
   MessageSquare, 
@@ -430,7 +431,7 @@ const BookingForm = () => {
 
                       {/* Right: Custom Clean Radio Indicator */}
                       <div className={`custom-radio-circle ${isSelected ? 'checked' : ''}`}>
-                        {isSelected && <div className="radio-inner-dot" />}
+                        {isSelected && <Check size={15} color="#050505" strokeWidth={3.5} />}
                       </div>
                     </div>
                   </div>
