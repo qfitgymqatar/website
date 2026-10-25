@@ -3,12 +3,37 @@
 import React, { useState } from 'react';
 import { useAdmin } from '@/context/AdminContext';
 import PageBanner from '@/components/PageBanner';
-import { Flame, Shield, Award, Dumbbell, Zap, CheckCircle2, CreditCard, Eye, X, FileText, ArrowRight } from 'lucide-react';
+import { Flame, Shield, Award, Dumbbell, Zap, CheckCircle2, CreditCard, Eye, X, FileText, ArrowRight, MessageSquare, Sparkles } from 'lucide-react';
 import './Packages.css';
+
+const CATEGORIES = [
+  {
+    id: 'boxing',
+    icon: '🥊',
+    title: 'Boxing & Combat Sports',
+    titleAr: 'ملاكمة ورياضات قتالية',
+    badge: 'Classes & Passes'
+  },
+  {
+    id: 'pt',
+    icon: '🏋️‍♂️',
+    title: 'Personal Training',
+    titleAr: 'تدريب شخصي (1-on-1)',
+    badge: 'Elite Coaching'
+  },
+  {
+    id: 'gym',
+    icon: '🏢',
+    title: 'Gym Membership',
+    titleAr: 'اشتراكات الجيم العامة',
+    badge: 'Open 24/7'
+  }
+];
 
 const Packages = () => {
   const { data } = useAdmin();
   const gallery = data?.gallery || [];
+  const [activeCategory, setActiveCategory] = useState('boxing');
   const [showDocModal, setShowDocModal] = useState(false);
 
   // Helper to find a gallery image by title keyword, or by index fallback
@@ -23,147 +48,89 @@ const Packages = () => {
     return defaultPath;
   };
 
-  // Official QFit Training Prices Rate Card Data (from Official Price Sheet)
-  const rateCardGroupClasses = [
-    {
-      name: 'Boxing • Muay Thai • HIIT • Jiu-Jitsu',
-      price: 'QAR 60',
-      rate: 'QAR 60 / session',
-      category: 'Group Class'
-    },
-    {
-      name: 'Brazilian Jiu-Jitsu (BJJ)',
-      price: 'QAR 80',
-      rate: 'QAR 80 / session',
-      category: 'Group Class'
-    },
-    {
-      name: 'Monthly membership (Boxing • Muay Thai • HIIT)',
-      price: 'QAR 600',
-      rate: 'QAR 600 / month',
-      category: 'Group Class'
-    },
-    {
-      name: '3-month membership (Boxing • Muay Thai • HIIT)',
-      price: 'QAR 1500',
-      rate: 'QAR 1,500 / 3 months',
-      category: 'Group Class'
-    }
-  ];
-
-  const rateCardPersonalTraining = [
-    {
-      package: 'Single session',
-      validity: 'Per session',
-      price: 'QAR 250',
-      category: 'Personal Training'
-    },
-    {
-      package: 'Qatar Airways — 7 sessions',
-      validity: '2 months',
-      price: 'QAR 1300',
-      badge: '✈️ Qatar Airways Exclusive',
-      category: 'Personal Training'
-    },
-    {
-      package: '10 sessions',
-      validity: '1 month',
-      price: 'QAR 1500',
-      category: 'Personal Training'
-    },
-    {
-      package: '12 sessions',
-      validity: '1 month',
-      price: 'QAR 1600',
-      category: 'Personal Training'
-    },
-    {
-      package: '20 sessions',
-      validity: '6 weeks',
-      price: 'QAR 2000',
-      badge: '🔥 Best Value',
-      category: 'Personal Training'
-    }
-  ];
-
-  const memberships = [
-    { 
-      category: 'General Gym',
-      title: '1 Month Membership', 
-      price: 'QAR 250', 
-      features: ['Full Gym Access (Open 24/7)', 'Locker & Shower Usage', 'State-of-the-art Cardio Zone', 'Free Weights Area', 'Ladies & Gents Sections'], 
-      img: getGalleryImage('cardio', 0, '/hero-gym.jpg') 
-    },
-    { 
-      category: 'General Gym',
-      title: '3 Months Membership', 
-      price: 'QAR 650', 
-      features: ['Full Gym Access (Open 24/7)', 'Unlimited Group Workouts', 'Locker & Shower Usage', 'Complimentary Fitness Assessment', 'Ladies & Gents Sections'], 
-      img: getGalleryImage('functional', 1, '/service-group.jpg') 
-    },
-    { 
-      category: 'General Gym',
-      title: '6 Months Membership', 
-      price: 'QAR 1200', 
-      features: ['Full Gym Access (Open 24/7)', 'Unlimited Group Workouts', 'Advanced Body Composition Scan', '30 Days Membership Freezing', 'VIP Locker Access'], 
-      highlighted: true, 
-      img: getGalleryImage('free weight', 2, '/service-weights.jpg') 
-    },
-    { 
-      category: 'General Gym',
-      title: '1 Year Membership', 
-      price: 'QAR 2100', 
-      features: ['Full Gym Access (Open 24/7)', 'All-Inclusive Amenities', 'Priority Class Booking', '45 Days Membership Freezing', 'Best Value Long-Term Rate'], 
-      img: getGalleryImage('boxing', 3, '/hero-gym.jpg') 
-    },
-    { 
-      category: 'General Gym',
-      title: 'Lifetime Member', 
-      price: 'QAR 15000', 
-      features: ['Permanent Access to all Gym Facilities', 'Lifetime Privileged VIP Status', 'Complimentary Guest Passes', 'Dedicated Personal Locker & Towel Service'], 
-      img: getGalleryImage('bjj', 4, '/hero-gym.jpg') 
-    }
-  ];
-
-  // Boxing Group Classes
+  // ========================================================
+  // 1. BOXING & COMBAT SPORTS PACKAGES
+  // ========================================================
   const boxingGroupPackages = [
     {
       category: 'Group Class',
       title: '1 Month Membership',
       price: 'QAR 600',
       subtitle: 'شهر واحد - حصص جماعية',
-      features: ['Boxing • Muay Thai • HIIT', 'Coached by Certified Fight Coaches', 'Boxing Ring & Heavy Bag Access', 'Separate Ladies & Gents Sections', 'All Fitness Levels Welcome'],
-      img: '/boxing-poster.jpg'
+      features: [
+        'Boxing • Muay Thai • HIIT',
+        'Coached by Certified Fight Coaches',
+        'Boxing Ring & Heavy Bag Access',
+        'Separate Ladies & Gents Sections',
+        'All Fitness Levels Welcome'
+      ],
+      img: getGalleryImage('boxing', 0, '/hero-gym.jpg')
     },
     {
       category: 'Group Class',
       title: '3 Months Membership',
       price: 'QAR 1500',
       subtitle: '3 أشهر - حصص جماعية',
-      features: ['Boxing • Muay Thai • HIIT', 'Technical Striking & Footwork', 'High-Intensity Calorie Burning', 'Boxing Gear & Ring Access', 'Structured Fight Progression'],
-      img: '/boxing-poster.jpg'
+      features: [
+        'Boxing • Muay Thai • HIIT',
+        'Technical Striking & Footwork',
+        'High-Intensity Calorie Burning',
+        'Structured Fight Progression',
+        'Boxing Ring & Heavy Bag Access'
+      ],
+      img: getGalleryImage('boxing', 1, '/hero-sports.jpg')
     },
     {
       category: 'Group Class',
       title: '6 Months Membership + BJJ',
       price: 'QAR 2000',
       subtitle: '6 أشهر - ملاكمة ومواي تاي وجوجيتسو',
-      features: ['Boxing • Muay Thai • HIIT • BJJ', 'Full Brazilian Jiu-Jitsu Included', 'Unlimited Fight Training Sessions', 'Maximum Savings (Best Combat Value)', 'Free Gym Facilities Access'],
+      features: [
+        'Boxing • Muay Thai • HIIT • BJJ',
+        'Full Brazilian Jiu-Jitsu Included',
+        'Unlimited Fight Training Sessions',
+        'Maximum Savings (Best Combat Value)',
+        'Full Gym Facilities Access'
+      ],
       highlighted: true,
       badge: 'Best Value',
-      img: '/boxing-poster.jpg'
+      img: getGalleryImage('bjj', 2, '/hero-gym.jpg')
     }
   ];
 
-  // Personal Training Packages (from Official Training Prices Rate Card)
+  const perSessionRates = [
+    {
+      title: 'Boxing • Muay Thai • HIIT • Jiu-Jitsu',
+      price: 'QAR 60',
+      unit: '/ session',
+      tag: 'Single Drop-In Pass',
+      desc: 'Join any scheduled striking, conditioning, or Jiu-Jitsu session with no long-term commitment.'
+    },
+    {
+      title: 'Brazilian Jiu-Jitsu (BJJ) Session',
+      price: 'QAR 80',
+      unit: '/ session',
+      tag: 'BJJ Drop-In Pass',
+      desc: 'Expert Brazilian Jiu-Jitsu gi / no-gi ground technique session with certified masters.'
+    }
+  ];
+
+  // ========================================================
+  // 2. PERSONAL TRAINING PACKAGES (FROM OFFICIAL RATE SHEET)
+  // ========================================================
   const personalTrainingPackages = [
     {
       category: 'Personal Training',
       title: 'Single Session PT',
       price: 'QAR 250',
       validity: 'Per Session (جلسة واحدة)',
-      features: ['1-on-1 Fight & Fitness Coach', 'Focused Padwork or Lifting Routine', 'Technique & Form Correction', 'No Long-Term Commitment'],
-      img: getGalleryImage('', 5, '/hero-gym.jpg')
+      features: [
+        '1-on-1 Dedicated Private Coach',
+        'Focused Padwork or Lifting Routine',
+        'Technique & Form Assessment',
+        'No Long-Term Commitment'
+      ],
+      img: getGalleryImage('pt', 3, '/hero-gym.jpg')
     },
     {
       category: 'Personal Training',
@@ -171,24 +138,40 @@ const Packages = () => {
       price: 'QAR 1300',
       validity: 'Valid 2 Months (صالحة لمدة شهرين)',
       badge: '✈️ Qatar Airways Exclusive',
-      features: ['Special Rate for Qatar Airways Staff & Crew', '1-on-1 Dedicated Coach', 'Flexible Booking Around Flight Rosters', 'Mitt Work, Technique & Conditioning'],
-      img: getGalleryImage('', 6, '/hero-gym.jpg')
+      qaBadge: true,
+      features: [
+        'Exclusive Partner Offer for Qatar Airways Staff & Crew',
+        '1-on-1 Dedicated Coach',
+        'Flexible Scheduling Around Flight Rosters',
+        'Mitt Work, Striking & Conditioning'
+      ],
+      img: getGalleryImage('pt', 4, '/hero-gym.jpg')
     },
     {
       category: 'Personal Training',
       title: '10 Sessions PT',
       price: 'QAR 1500',
       validity: 'Valid 1 Month (صالحة لمدة شهر واحد)',
-      features: ['1-on-1 Dedicated Coach', 'Striking, Cardio & Strength Conditioning', 'Tailored Workout Progression', 'Flexible Scheduling'],
-      img: getGalleryImage('', 7, '/service-pt.jpg')
+      features: [
+        '1-on-1 Dedicated Coach',
+        'Striking, Cardio & Strength Conditioning',
+        'Tailored Workout Progression',
+        'Flexible Scheduling'
+      ],
+      img: getGalleryImage('pt', 5, '/service-pt.jpg')
     },
     {
       category: 'Personal Training',
       title: '12 Sessions PT',
       price: 'QAR 1600',
       validity: 'Valid 1 Month (صالحة لمدة شهر واحد)',
-      features: ['3 Workouts Per Week Optimal Schedule', '1-on-1 Elite Coach Guidance', 'Technique Mastery & Body Transformation', 'Nutritional & Lifestyle Advice'],
-      img: getGalleryImage('', 8, '/hero-gym.jpg')
+      features: [
+        '3 Sessions Per Week Optimal Progression',
+        '1-on-1 Elite Coach Guidance',
+        'Technique Mastery & Body Transformation',
+        'Nutritional & Lifestyle Guidance'
+      ],
+      img: getGalleryImage('pt', 6, '/hero-gym.jpg')
     },
     {
       category: 'Personal Training',
@@ -197,38 +180,29 @@ const Packages = () => {
       validity: 'Valid 6 Weeks (صالحة لمدة 6 أسابيع)',
       highlighted: true,
       badge: '🔥 Best Value',
-      features: ['Only QAR 100/session (Maximum Savings)', '1-on-1 Intensive Training', 'Rapid Transformation & Skill Building', 'Priority Ring & Equipment Access'],
-      img: getGalleryImage('', 9, '/service-pt.jpg')
+      features: [
+        'Only QAR 100/session (Maximum Savings)',
+        '1-on-1 Intensive Training',
+        'Rapid Transformation & Skill Building',
+        'Priority Ring & Equipment Access'
+      ],
+      img: getGalleryImage('pt', 7, '/service-pt.jpg')
     },
     {
       category: 'Personal Training',
       title: 'Couples PT (10 Sessions)',
       price: 'QAR 2500',
       validity: 'Valid 1 Month (صالحة لمدة شهر واحد - تدريب ثنائي)',
-      features: ['Train Together (2 Persons)', 'Fun & Dynamic Partner Drills', 'Customized Dual Workout Routines', 'Dedicated Coach'],
-      img: getGalleryImage('', 10, '/hero-gym.jpg')
+      features: [
+        'Train Together (2 Persons)',
+        'Fun & Dynamic Partner Drills',
+        'Customized Dual Workout Routines',
+        'Dedicated Private Coach'
+      ],
+      img: getGalleryImage('pt', 8, '/hero-gym.jpg')
     }
   ];
 
-  // Per Session Drop-in Classes
-  const perSessionRates = [
-    {
-      title: 'Boxing • Muay Thai • HIIT • Jiu-Jitsu',
-      price: 'QAR 60',
-      unit: '/ session',
-      tag: 'Single Drop-In Pass',
-      desc: 'Join any scheduled striking, HIIT, or Jiu-Jitsu class with no long-term commitment.'
-    },
-    {
-      title: 'Brazilian Jiu-Jitsu (BJJ) Session',
-      price: 'QAR 80',
-      unit: '/ session',
-      tag: 'BJJ Drop-In Pass',
-      desc: 'Expert Brazilian Jiu-Jitsu gi / no-gi ground technique class with certified masters.'
-    }
-  ];
-
-  // General Gym Personal Training
   const generalPtPackages = [
     { 
       category: 'Gym Fitness PT',
@@ -254,16 +228,98 @@ const Packages = () => {
     }
   ];
 
+  // ========================================================
+  // 3. GENERAL GYM MEMBERSHIPS
+  // ========================================================
+  const memberships = [
+    { 
+      category: 'General Gym',
+      title: '1 Month Membership', 
+      price: 'QAR 250', 
+      subtitle: 'شهر واحد',
+      features: [
+        'Full Gym Access (Open 24/7)',
+        'State-of-the-art Cardio Zone',
+        'IVANKO Free Weights & Dumbbells Area',
+        'Private Ladies & Gents Sections',
+        'Locker & Shower Usage'
+      ], 
+      img: getGalleryImage('cardio', 0, '/hero-gym.jpg') 
+    },
+    { 
+      category: 'General Gym',
+      title: '3 Months Membership', 
+      price: 'QAR 650', 
+      subtitle: '3 أشهر',
+      features: [
+        'Full Gym Access (Open 24/7)',
+        'Unlimited Workout Access',
+        'Complimentary Fitness Assessment',
+        'Private Ladies & Gents Sections',
+        'Locker & Shower Usage'
+      ], 
+      img: getGalleryImage('functional', 1, '/service-group.jpg') 
+    },
+    { 
+      category: 'General Gym',
+      title: '6 Months Membership', 
+      price: 'QAR 1200', 
+      subtitle: '6 أشهر',
+      features: [
+        'Full Gym Access (Open 24/7)',
+        'Unlimited Workout Access',
+        'Advanced Body Composition Scan',
+        '30 Days Membership Freezing',
+        'VIP Locker & Shower Usage'
+      ], 
+      highlighted: true, 
+      badge: 'Popular',
+      img: getGalleryImage('free weight', 2, '/service-weights.jpg') 
+    },
+    { 
+      category: 'General Gym',
+      title: '1 Year Membership', 
+      price: 'QAR 2100', 
+      subtitle: 'سنة كاملة',
+      features: [
+        'Full Gym Access (Open 24/7)',
+        'All-Inclusive Amenities Access',
+        '45 Days Membership Freezing',
+        'Best Value Long-Term Rate',
+        'Priority Class Booking'
+      ], 
+      badge: 'Best Value',
+      img: getGalleryImage('boxing', 3, '/hero-gym.jpg') 
+    },
+    { 
+      category: 'General Gym',
+      title: 'Lifetime Member', 
+      price: 'QAR 15000', 
+      subtitle: 'عضوية دائمة مدى الحياة',
+      features: [
+        'Permanent Access to all Gym Facilities',
+        'Lifetime Privileged VIP Status',
+        'Complimentary Guest Passes',
+        'Dedicated Personal Locker & Towel Service'
+      ], 
+      img: getGalleryImage('bjj', 4, '/hero-gym.jpg') 
+    }
+  ];
+
   const handleSelectPlan = (pkg) => {
     const planName = pkg.category ? `${pkg.category} - ${pkg.title}` : pkg.title;
     window.location.href = `/booking?plan=${encodeURIComponent(planName)}&price=${encodeURIComponent(pkg.price)}`;
   };
 
   const renderCard = (pkg, idx) => (
-    <div key={idx} className={`pkg-img-card ${pkg.highlighted ? 'highlighted' : ''} ${pkg.wide ? 'wide-card' : ''}`} style={{ backgroundImage: `url(${pkg.img})` }}>
+    <div key={idx} className={`pkg-img-card ${pkg.highlighted ? 'highlighted' : ''}`} style={{ backgroundImage: `url(${pkg.img})` }}>
       <div className="pkg-overlay"></div>
       <div className="pkg-content">
-        {pkg.badge && <span className="pkg-badge">{pkg.badge}</span>}
+        {pkg.badge && (
+          <span className={`pkg-badge ${pkg.qaBadge ? 'qa-badge-card' : ''}`}>
+            {pkg.badge}
+          </span>
+        )}
         <h3 className="pkg-title">{pkg.title}</h3>
         {pkg.subtitle && <p className="pkg-subtitle">{pkg.subtitle}</p>}
         {pkg.validity && <p className="pkg-validity-tag">⏱️ {pkg.validity}</p>}
@@ -272,7 +328,7 @@ const Packages = () => {
           {pkg.features.map((feature, fIdx) => (
             <li key={fIdx}>
               <span className="pkg-icon">✓</span>
-              {feature}
+              <span>{feature}</span>
             </li>
           ))}
         </ul>
@@ -290,7 +346,7 @@ const Packages = () => {
     <div className="page-container">
       <PageBanner 
         title="Membership & Class Packages" 
-        subtitle="Transparent rates with flexible payment options. Choose your plan below." 
+        subtitle="Transparent rates with flexible payment options. Select a category below." 
         bgImage="/hero-gym.jpg" 
       />
 
@@ -305,118 +361,165 @@ const Packages = () => {
         </div>
 
         {/* ======================================================== */}
-        {/* OFFICIAL QFIT TRAINING PRICES RATE SHEET (DOCUMENT LAYOUT) */}
+        {/* CATEGORY SWITCHER TABS (MOBILE FRIENDLY) */}
         {/* ======================================================== */}
-        <div className="official-rate-sheet-section">
-          <div className="rate-sheet-header">
-            <h2 className="rate-sheet-title">QFIT</h2>
-            <p className="rate-sheet-subtitle">TRAINING PRICES • أسعار التدريب</p>
-            <div className="rate-sheet-actions-top">
-              <button 
-                type="button" 
-                className="document-view-btn" 
-                onClick={() => setShowDocModal(true)}
+        <div className="category-tabs-container">
+          {CATEGORIES.map(cat => {
+            const isActive = activeCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                type="button"
+                className={`category-tab-btn ${isActive ? 'active' : ''}`}
+                onClick={() => setActiveCategory(cat.id)}
               >
-                <Eye size={16} /> View Official Rate Sheet
+                <div className="tab-left-wrap">
+                  <span className="category-tab-icon">{cat.icon}</span>
+                  <div>
+                    <h3 className="category-tab-title">{cat.title}</h3>
+                    <span className="category-tab-ar">{cat.titleAr}</span>
+                  </div>
+                </div>
+                <span className="category-tab-badge">{cat.badge}</span>
               </button>
-              <a 
-                href="/training-prices.png" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="document-view-btn"
-              >
-                <FileText size={16} /> Open Document Image
-              </a>
-            </div>
-          </div>
-
-          {/* GROUP CLASSES TABLE */}
-          <div className="rate-table-block">
-            <h3 className="rate-table-title">
-              <Flame size={20} color="#e60026" /> GROUP CLASSES <span className="arabic-sub" style={{fontSize: '0.9rem', display: 'inline', marginLeft: '8px'}}>(حصص جماعية)</span>
-            </h3>
-            <div className="rate-table-container">
-              <table className="rate-table">
-                <thead className="rate-table-dark-header">
-                  <tr>
-                    <th>Class / Membership</th>
-                    <th>Price</th>
-                    <th style={{textAlign: 'right'}}>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rateCardGroupClasses.map((item, idx) => (
-                    <tr key={idx}>
-                      <td>
-                        <span className="rate-item-name">{item.name}</span>
-                      </td>
-                      <td className="rate-price-cell">{item.rate}</td>
-                      <td style={{textAlign: 'right'}}>
-                        <button 
-                          className="rate-action-btn"
-                          onClick={() => window.location.href = `/booking?plan=${encodeURIComponent(`${item.category} - ${item.name}`)}&price=${encodeURIComponent(item.price)}`}
-                        >
-                          Book Now <ArrowRight size={14} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* PERSONAL TRAINING TABLE */}
-          <div className="rate-table-block">
-            <h3 className="rate-table-title">
-              <Dumbbell size={20} color="#00f2fe" /> PERSONAL TRAINING <span className="arabic-sub" style={{fontSize: '0.9rem', display: 'inline', marginLeft: '8px'}}>(تدريب شخصي)</span>
-            </h3>
-            <div className="rate-table-container">
-              <table className="rate-table">
-                <thead className="rate-table-red-header">
-                  <tr>
-                    <th>Package</th>
-                    <th>Validity</th>
-                    <th>Price</th>
-                    <th style={{textAlign: 'right'}}>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {rateCardPersonalTraining.map((item, idx) => (
-                    <tr key={idx}>
-                      <td>
-                        <div className="rate-item-name">
-                          <span>{item.package}</span>
-                          {item.badge && (
-                            <span className={item.badge.includes('Qatar') ? 'qa-badge' : 'best-value-badge'}>
-                              {item.badge}
-                            </span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="rate-validity-tag">{item.validity}</td>
-                      <td className="rate-price-cell">{item.price}</td>
-                      <td style={{textAlign: 'right'}}>
-                        <button 
-                          className="rate-action-btn"
-                          onClick={() => window.location.href = `/booking?plan=${encodeURIComponent(`${item.category} - ${item.package}`)}&price=${encodeURIComponent(item.price)}`}
-                        >
-                          Book Now <ArrowRight size={14} />
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          {/* SLOGAN AT BOTTOM */}
-          <div className="rate-sheet-slogan-wrap">
-            <h4 className="rate-sheet-slogan">Train hard. Build skill. Get stronger.</h4>
-            <p className="rate-sheet-slogan-ar">تدرب بقوة • ابنِ مهارتك • كن أقوى</p>
-          </div>
+            );
+          })}
         </div>
+
+        {/* ======================================================== */}
+        {/* CATEGORY 1: BOXING & COMBAT SPORTS */}
+        {/* ======================================================== */}
+        {activeCategory === 'boxing' && (
+          <div className="category-panel">
+            <div className="category-header-banner">
+              <div className="category-banner-info">
+                <h2>🥊 Boxing & Combat Sports <span className="arabic-sub" style={{display: 'inline', fontSize: '1.05rem', marginLeft: '6px'}}>(ملاكمة ورياضات قتالية)</span></h2>
+                <p>Train • Fight • Believe • Achieve — Boxing, Muay Thai, HIIT & Brazilian Jiu-Jitsu (BJJ) with specialized ring and equipment.</p>
+                <div className="category-pill-row">
+                  <span className="category-pill"><Flame size={14} color="#e60026" /> Boxing Ring & Heavy Bags</span>
+                  <span className="category-pill"><Shield size={14} color="#e60026" /> Gear Provided</span>
+                  <span className="category-pill"><Zap size={14} color="#e60026" /> Dedicated Gents & Ladies</span>
+                  <span className="category-pill"><CheckCircle2 size={14} color="#e60026" /> Open 24/7 (Fri 4-10 PM)</span>
+                </div>
+              </div>
+              <div className="category-banner-actions">
+                <a 
+                  href="https://wa.me/97433279451?text=Hello,%20I%20would%20like%20to%20inquire%20about%20Boxing%20Classes%20at%20QFit%20Gym!" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="btn-secondary"
+                  style={{display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 18px'}}
+                >
+                  <MessageSquare size={16} /> WhatsApp Inquiry
+                </a>
+              </div>
+            </div>
+
+            {/* Sub-section: Group Classes */}
+            <div style={{marginBottom: '45px'}}>
+              <h3 className="sub-heading-center">Group Class Memberships <span className="arabic-sub">اشتراكات الحصص الجماعية</span></h3>
+              <div className="packages-grid">
+                {boxingGroupPackages.map(renderCard)}
+              </div>
+            </div>
+
+            {/* Sub-section: Single Session Drop-In */}
+            <div style={{marginBottom: '30px'}}>
+              <h3 className="sub-heading-center">Per Session Drop-In Passes <span className="arabic-sub">أسعار الحصص الفردية</span></h3>
+              <div className="per-session-grid">
+                {perSessionRates.map((item, sIdx) => (
+                  <div key={sIdx} className="session-card">
+                    <div className="session-tag">{item.tag}</div>
+                    <h4 className="session-title">{item.title}</h4>
+                    <p className="session-desc">{item.desc}</p>
+                    <div className="session-price-row">
+                      <span className="session-price">{item.price}</span>
+                      <span className="session-unit">{item.unit}</span>
+                    </div>
+                    <button 
+                      className="btn-primary session-btn"
+                      onClick={() => window.location.href = `/booking?plan=${encodeURIComponent(`Group Class - ${item.title}`)}&price=${encodeURIComponent(item.price)}`}
+                    >
+                      Book Session Now
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ======================================================== */}
+        {/* CATEGORY 2: PERSONAL TRAINING */}
+        {/* ======================================================== */}
+        {activeCategory === 'pt' && (
+          <div className="category-panel">
+            
+            {/* Slogan Banner */}
+            <div className="category-slogan-card">
+              <h3>Train hard. Build skill. Get stronger.</h3>
+              <p>تدرب بقوة • ابنِ مهارتك • كن أقوى</p>
+            </div>
+
+            <div className="category-header-banner">
+              <div className="category-banner-info">
+                <h2>🏋️‍♂️ Personal Training & 1-on-1 Coaching <span className="arabic-sub" style={{display: 'inline', fontSize: '1.05rem', marginLeft: '6px'}}>(تدريب شخصي فردي)</span></h2>
+                <p>1-on-1 private coaching tailored to your individual schedule and fitness goals. Certified master coaches for striking, conditioning, and transformation.</p>
+              </div>
+              <div className="category-banner-actions">
+                <button 
+                  type="button" 
+                  className="document-view-btn" 
+                  onClick={() => setShowDocModal(true)}
+                >
+                  <Eye size={16} /> View Official Rate Sheet
+                </button>
+              </div>
+            </div>
+
+            {/* 1-on-1 Combat & Fitness PT Packages */}
+            <div style={{marginBottom: '50px'}}>
+              <h3 className="sub-heading-center">1-on-1 Personal Training Packages <span className="arabic-sub">باقات التدريب الشخصي الفردي</span></h3>
+              <div className="packages-grid">
+                {personalTrainingPackages.map(renderCard)}
+              </div>
+            </div>
+
+            {/* General Gym Fitness Coaching */}
+            <div style={{marginBottom: '30px'}}>
+              <h3 className="sub-heading-center">General Fitness Coaching <span className="arabic-sub">تدريب اللياقة البدنية العام</span></h3>
+              <div className="packages-grid">
+                {generalPtPackages.map(renderCard)}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ======================================================== */}
+        {/* CATEGORY 3: GENERAL GYM MEMBERSHIP */}
+        {/* ======================================================== */}
+        {activeCategory === 'gym' && (
+          <div className="category-panel">
+            <div className="category-header-banner">
+              <div className="category-banner-info">
+                <h2>🏢 General Gym Memberships <span className="arabic-sub" style={{display: 'inline', fontSize: '1.05rem', marginLeft: '6px'}}>(اشتراكات الجيم العامة)</span></h2>
+                <p>Full 24/7 access to QFit Gym in Mansoura, Doha with premium IVANKO free weights, cardio theater, and private ladies section.</p>
+                <div className="category-pill-row">
+                  <span className="category-pill"><CheckCircle2 size={14} color="#00f2fe" /> Open 24/7 (Fri 4-10 PM)</span>
+                  <span className="category-pill"><CheckCircle2 size={14} color="#00f2fe" /> IVANKO Free Weights</span>
+                  <span className="category-pill"><CheckCircle2 size={14} color="#00f2fe" /> Private Ladies Section</span>
+                  <span className="category-pill"><CheckCircle2 size={14} color="#00f2fe" /> Showers & Lockers</span>
+                </div>
+              </div>
+            </div>
+
+            <div style={{marginBottom: '30px'}}>
+              <div className="packages-grid">
+                {memberships.map(renderCard)}
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* DOCUMENT PREVIEW MODAL */}
         {showDocModal && (
@@ -429,123 +532,6 @@ const Packages = () => {
             </div>
           </div>
         )}
-
-        {/* ======================================================== */}
-        {/* BOXING & COMBAT SPORTS FEATURE SECTION */}
-        {/* ======================================================== */}
-        <div className="boxing-showcase-section">
-          <div className="boxing-header-row">
-            <div>
-              <span className="boxing-badge">🥊 COMBAT SPORTS & FITNESS</span>
-              <h2 className="boxing-section-title">BOXING & MARTIAL ARTS <span className="text-red">CLASSES</span></h2>
-              <p className="boxing-section-subtitle">
-                Train • Fight • Believe • Achieve — Boxing, Muay Thai, HIIT & Brazilian Jiu-Jitsu (BJJ) with separate Gents & Ladies facilities.
-              </p>
-            </div>
-            <div className="boxing-features-pills">
-              <span><Flame size={16} /> Burn Calories</span>
-              <span><Zap size={16} /> Build Strength</span>
-              <span><Shield size={16} /> Self Defense</span>
-              <span><Award size={16} /> Real Skills</span>
-            </div>
-          </div>
-
-          {/* Boxing Poster Feature Card */}
-          <div className="boxing-promo-banner">
-            <div className="boxing-promo-img-wrap">
-              <img src="/boxing-poster.jpg" alt="QFit Boxing Classes" className="boxing-poster-preview" />
-            </div>
-            <div className="boxing-promo-details">
-              <h3>Get Your Life Back On Track</h3>
-              <p>Experience high-energy training with specialized equipment and dedicated combat zones in Mansoura, Doha.</p>
-              <ul className="boxing-amenities-list">
-                <li><CheckCircle2 size={16} color="#e60026" /> Boxing Ring & Official Punching Bags</li>
-                <li><CheckCircle2 size={16} color="#e60026" /> Complete Boxing & Protective Gear</li>
-                <li><CheckCircle2 size={16} color="#e60026" /> Dedicated Gents & Ladies Sections</li>
-                <li><CheckCircle2 size={16} color="#e60026" /> Cardio & Strength Training Zones</li>
-                <li><CheckCircle2 size={16} color="#e60026" /> Open 24 Hours (Friday 4 PM - 10 PM)</li>
-              </ul>
-              <div className="boxing-promo-cta">
-                <a 
-                  href="#group-class-cards" 
-                  className="btn-primary" 
-                  style={{padding: '12px 25px'}}
-                >
-                  View Class Packages Below ↓
-                </a>
-                <a 
-                  href="https://wa.me/97433279451?text=Hello,%20I%20would%20like%20to%20inquire%20about%20Boxing%20Classes%20at%20QFit%20Gym!" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="btn-secondary"
-                  style={{padding: '12px 25px'}}
-                >
-                  WhatsApp Inquiry
-                </a>
-              </div>
-            </div>
-          </div>
-
-          {/* Table 1: Group Classes (Cards) */}
-          <div id="group-class-cards" style={{paddingTop: '20px'}}>
-            <h3 className="sub-heading-center">Group Class Memberships (Boxing / Muay Thai / HIIT / BJJ) <span className="arabic-sub">حصص جماعية (ملاكمة ومواي تاي)</span></h3>
-            <div className="packages-grid">
-              {boxingGroupPackages.map(renderCard)}
-            </div>
-          </div>
-
-          {/* Table 2: Per Session Prices (Drop-in) */}
-          <div style={{marginTop: '50px'}}>
-            <h3 className="sub-heading-center">Per Session Drop-In Passes <span className="arabic-sub">أسعار الحصص الفردية</span></h3>
-            <div className="per-session-grid">
-              {perSessionRates.map((item, sIdx) => (
-                <div key={sIdx} className="session-card">
-                  <div className="session-tag">{item.tag}</div>
-                  <h4 className="session-title">{item.title}</h4>
-                  <p className="session-desc">{item.desc}</p>
-                  <div className="session-price-row">
-                    <span className="session-price">{item.price}</span>
-                    <span className="session-unit">{item.unit}</span>
-                  </div>
-                  <button 
-                    className="btn-primary session-btn"
-                    onClick={() => window.location.href = `/booking?plan=${encodeURIComponent(`Group Class - ${item.title}`)}&price=${encodeURIComponent(item.price)}`}
-                  >
-                    Book Session
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Table 3: Personal Training */}
-          <div style={{marginTop: '50px'}}>
-            <h3 className="sub-heading-center">Personal Training Packages <span className="arabic-sub">باقات التدريب الشخصي</span></h3>
-            <div className="packages-grid">
-              {personalTrainingPackages.map(renderCard)}
-            </div>
-          </div>
-        </div>
-
-        {/* ======================================================== */}
-        {/* GENERAL GYM MEMBERSHIPS */}
-        {/* ======================================================== */}
-        <div style={{marginTop: '70px'}}>
-          <h2 className="section-title text-center">General Gym Membership <span className="arabic-sub">اشتراكات الجيم العامة</span></h2>
-          <div className="packages-grid">
-            {memberships.map(renderCard)}
-          </div>
-        </div>
-
-        {/* ======================================================== */}
-        {/* GENERAL GYM PERSONAL TRAINING */}
-        {/* ======================================================== */}
-        <div style={{marginTop: '70px', marginBottom: '40px'}}>
-          <h2 className="section-title text-center">General Fitness Coaching <span className="arabic-sub">تدريب اللياقة البدنية العام</span></h2>
-          <div className="packages-grid">
-            {generalPtPackages.map(renderCard)}
-          </div>
-        </div>
 
       </div>
     </div>
