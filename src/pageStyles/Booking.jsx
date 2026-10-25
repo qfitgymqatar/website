@@ -3,7 +3,24 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { supabase } from '@/supabaseClient';
-import { CreditCard, Building2, Banknote, CheckCircle, ArrowRight, ShieldCheck, Dumbbell, MessageSquare } from 'lucide-react';
+import { 
+  CreditCard, 
+  Building2, 
+  Banknote, 
+  CheckCircle, 
+  ArrowRight, 
+  ShieldCheck, 
+  MessageSquare, 
+  ChevronDown, 
+  Lock, 
+  PhoneCall, 
+  Clock, 
+  MapPin, 
+  Sparkles,
+  Mail,
+  User,
+  CreditCard as CardIcon
+} from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import './Booking.css';
 
@@ -53,8 +70,8 @@ const PAYMENT_METHODS = [
   {
     id: 'bank_transfer',
     title: 'Direct Bank Transfer (QNB Qatar)',
-    titleAr: 'تحويل بنكي مباشر',
-    desc: 'Transfer directly to QFit Gym account (IBAN/Account details provided).',
+    titleAr: 'تحويل بنكي مباشر (بنك قطر الوطني)',
+    desc: 'Transfer directly to QFit Gym account (IBAN/Account details provided upon submission).',
     badge: 'Direct Transfer',
     icon: Banknote
   }
@@ -68,6 +85,7 @@ const BookingForm = () => {
   const [selectedPlan, setSelectedPlan] = useState(initialPlan || AVAILABLE_PLANS[0].name);
   const [selectedPrice, setSelectedPrice] = useState(initialPrice || AVAILABLE_PLANS[0].price);
   const [paymentMethod, setPaymentMethod] = useState('card_link');
+  const [showPlanDropdown, setShowPlanDropdown] = useState(!initialPlan);
 
   const [emailId, setEmailId] = useState('');
   const [mobileNo, setMobileNo] = useState('');
@@ -81,7 +99,10 @@ const BookingForm = () => {
   useEffect(() => {
     if (initialPlan) {
       setSelectedPlan(initialPlan);
-      const match = AVAILABLE_PLANS.find(p => p.name.toLowerCase().includes(initialPlan.toLowerCase()) || initialPlan.toLowerCase().includes(p.name.toLowerCase()));
+      const match = AVAILABLE_PLANS.find(
+        p => p.name.toLowerCase().includes(initialPlan.toLowerCase()) || 
+             initialPlan.toLowerCase().includes(p.name.toLowerCase())
+      );
       if (match) {
         setSelectedPrice(initialPrice || match.price);
       } else if (initialPrice) {
@@ -215,12 +236,12 @@ const BookingForm = () => {
   // WhatsApp helper for customer to initiate instant chat
   const getWhatsAppBookingUrl = () => {
     if (!submittedData) return 'https://wa.me/97433279451';
-    const msg = `Hello QFit Gym! I just submitted a booking on your website:\n- Plan: ${submittedData.plan}\n- Price: ${submittedData.price}\n- Payment: ${submittedData.payment.title}\n- Mobile: ${submittedData.mobile}\n- Email: ${submittedData.email}\nPlease provide the next steps.`;
+    const msg = `Hello QFit Gym! I just submitted a booking on your website:\n- Plan: ${submittedData.plan}\n- Price: ${submittedData.price}\n- Payment Preference: ${submittedData.payment.title}\n- Mobile: ${submittedData.mobile}\n- Email: ${submittedData.email}\nPlease provide the next steps.`;
     return `https://wa.me/97433279451?text=${encodeURIComponent(msg)}`;
   };
 
   // ========================================================
-  // SUCCESS SCREEN
+  // SUCCESS CONFIRMATION SCREEN
   // ========================================================
   if (submittedData) {
     return (
@@ -244,20 +265,24 @@ const BookingForm = () => {
               <strong className="summary-value text-red">{submittedData.price}</strong>
             </div>
             <div className="summary-row">
-              <span className="summary-label">Payment Method:</span>
+              <span className="summary-label">Payment Preference:</span>
               <strong className="summary-value">{submittedData.payment.title}</strong>
             </div>
             <div className="summary-row">
               <span className="summary-label">Contact Mobile:</span>
               <span className="summary-value">{submittedData.mobile}</span>
             </div>
+            <div className="summary-row">
+              <span className="summary-label">Contact Email:</span>
+              <span className="summary-value">{submittedData.email}</span>
+            </div>
           </div>
 
           <div className="confirmation-notice">
             <p>
-              {submittedData.payment.id === 'card_link' && 'Our reception desk has been notified. You will receive your secure card payment link via WhatsApp and Email shortly.'}
-              {submittedData.payment.id === 'reception' && 'Please visit QFit Gym reception at Mansoura, Doha to complete your payment via Cash or Card.'}
-              {submittedData.payment.id === 'bank_transfer' && 'Our team will message you the official QNB Qatar bank account details via WhatsApp to complete your transfer.'}
+              {submittedData.payment.id === 'card_link' && 'Our reception desk has been notified. You will receive your secure online card payment link via WhatsApp and Email shortly.'}
+              {submittedData.payment.id === 'reception' && 'Please visit QFit Gym reception at Mansoura, Doha to complete your payment via Cash or Card upon arrival.'}
+              {submittedData.payment.id === 'bank_transfer' && 'Our team will message you the official QNB Qatar corporate bank account details via WhatsApp to complete your transfer.'}
             </p>
           </div>
 
@@ -268,13 +293,13 @@ const BookingForm = () => {
               rel="noopener noreferrer" 
               className="whatsapp-confirm-btn"
             >
-              <MessageSquare size={20} />
+              <MessageSquare size={22} />
               Confirm Immediately on WhatsApp
             </a>
 
             <button 
               className="btn-secondary" 
-              style={{marginTop: '15px', width: '100%'}}
+              style={{marginTop: '15px', width: '100%', padding: '14px', borderRadius: '10px'}}
               onClick={() => {
                 setSubmittedData(null);
                 setEmailId('');
@@ -283,7 +308,7 @@ const BookingForm = () => {
                 setQidNo('');
               }}
             >
-              Book Another Plan / Return
+              Book Another Plan / Return to Form
             </button>
           </div>
         </div>
@@ -292,66 +317,94 @@ const BookingForm = () => {
   }
 
   // ========================================================
-  // BOOKING & PAYMENT FORM
+  // PROFESSIONAL BOOKING & PAYMENT FORM
   // ========================================================
   return (
     <div className="booking-page" style={{ backgroundImage: "url('/hero-cinematic.jpg')" }}>
       <div className="booking-overlay"></div>
       
       <div className="booking-container">
+        
+        {/* Header Logo */}
         <div className="booking-header">
           <img src="/footer-logo.png" alt="QFit Gym Logo" className="booking-logo" />
         </div>
         
+        {/* Title & Subtitle */}
         <div className="booking-titles">
-          <h2>Book Your Membership & Class <span>إحجز اشتراكك أو حصتك</span></h2>
-          <p className="booking-subtitle">SELECT YOUR PLAN & PAYMENT OPTION BELOW <span>اختر باقتك وطريقة الدفع أدناه</span></p>
+          <h2>
+            Booking & Membership Checkout
+            <span>إتمام الحجز والاشتراك</span>
+          </h2>
+          <p className="booking-subtitle">
+            SELECT YOUR PAYMENT OPTION & COMPLETE DETAILS
+            <span>اختر طريقة الدفع المفضلة وأكمل البيانات أدناه</span>
+          </p>
         </div>
 
         <form className="booking-form" onSubmit={handleSubmit}>
           
-          {/* Plan & Pricing Selector */}
-          <div className="form-group plan-select-group">
-            <label>
-              Select Membership / Class Package <span>اختر الباقة أو الحصة</span>
-            </label>
-            <div className="plan-dropdown-wrap">
-              <select 
-                value={selectedPlan} 
-                onChange={handlePlanChange} 
-                className="plan-select-input"
-              >
-                {plansToRender.map((plan, idx) => (
-                  <option key={idx} value={plan.name}>
-                    {plan.name} — {plan.price}
-                  </option>
-                ))}
-              </select>
+          {/* ======================================================== */}
+          {/* 1. SELECTED PACKAGE CARD (PROFESSIONAL SUMMARY) */}
+          {/* ======================================================== */}
+          <div className="plan-summary-card">
+            <div className="plan-card-top">
+              <div>
+                <span className="plan-badge-tag">Selected Package • الباقة المختارة</span>
+                <div className="plan-name-display">{selectedPlan}</div>
+              </div>
+              <div className="plan-price-display">
+                <span className="price-main">{selectedPrice}</span>
+                <div className="registration-fee-note">+ QAR 50 Reg. (New Members)</div>
+              </div>
             </div>
-            
-            {/* Price Preview Banner */}
-            <div className="price-summary-banner">
-              <div className="price-breakdown">
-                <div>
-                  <span className="breakdown-label">Package Rate:</span>
-                  <strong className="breakdown-amount">{selectedPrice}</strong>
-                </div>
-                <div style={{color: '#aaa', fontSize: '0.85rem'}}>
-                  + QAR 50 One-Time Registration (New Members)
-                </div>
+
+            {/* Toggle to change plan */}
+            <div>
+              <button 
+                type="button" 
+                className="plan-toggle-btn"
+                onClick={() => setShowPlanDropdown(!showPlanDropdown)}
+              >
+                <ChevronDown size={15} style={{transform: showPlanDropdown ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s'}} />
+                {showPlanDropdown ? 'Hide package list' : 'Change package / تغيير الباقة'}
+              </button>
+            </div>
+
+            {/* Collapsible Dropdown Selector */}
+            {showPlanDropdown && (
+              <div className="plan-dropdown-reveal">
+                <select 
+                  value={selectedPlan} 
+                  onChange={handlePlanChange} 
+                  className="plan-select-input"
+                >
+                  {plansToRender.map((plan, idx) => (
+                    <option key={idx} value={plan.name}>
+                      {plan.name} — {plan.price}
+                    </option>
+                  ))}
+                </select>
               </div>
-              <div className="secure-badge">
-                <ShieldCheck size={16} color="#25d366" />
-                <span>Best Gym Value in Qatar</span>
-              </div>
+            )}
+
+            {/* Trust Strip */}
+            <div className="plan-trust-strip">
+              <span className="trust-pill"><Clock size={14} color="#00f2fe" /> Open 24/7 (Fri 4-10 PM)</span>
+              <span className="trust-pill"><MapPin size={14} color="#00f2fe" /> Mansoura, Doha</span>
+              <span className="trust-pill"><ShieldCheck size={14} color="#25d366" /> Best Gym Value</span>
             </div>
           </div>
 
-          {/* Payment Method Selector */}
-          <div className="form-group payment-options-group">
-            <label>
-              Choose Payment Method <span>اختر طريقة الدفع المفضلة</span>
-            </label>
+          {/* ======================================================== */}
+          {/* 2. PAYMENT METHODS SELECTOR (FIXED & PROFESSIONAL) */}
+          {/* ======================================================== */}
+          <div className="payment-options-block">
+            <div className="payment-section-label">
+              <span>Choose Payment Method</span>
+              <span>اختر طريقة الدفع المفضلة</span>
+            </div>
+
             <div className="payment-methods-grid">
               {PAYMENT_METHODS.map((method) => {
                 const IconComponent = method.icon;
@@ -362,52 +415,59 @@ const BookingForm = () => {
                     className={`payment-method-card ${isSelected ? 'selected' : ''}`}
                     onClick={() => setPaymentMethod(method.id)}
                   >
-                    <div className="payment-card-header">
+                    <div className="payment-card-content">
+                      {/* Left: Glowing Icon */}
                       <div className="payment-icon-wrap">
                         <IconComponent size={22} />
                       </div>
-                      <div className="payment-titles">
-                        <h4>{method.title}</h4>
-                        <span className="payment-title-ar">{method.titleAr}</span>
+
+                      {/* Center: Full-width Titles & Description */}
+                      <div className="payment-titles-block">
+                        <div className="payment-main-title">{method.title}</div>
+                        <div className="payment-ar-title">{method.titleAr}</div>
+                        <p className="payment-desc-text">{method.desc}</p>
                       </div>
-                      <input 
-                        type="radio" 
-                        name="paymentMethod" 
-                        checked={isSelected} 
-                        onChange={() => setPaymentMethod(method.id)}
-                        className="payment-radio"
-                      />
+
+                      {/* Right: Custom Clean Radio Indicator */}
+                      <div className={`custom-radio-circle ${isSelected ? 'checked' : ''}`}>
+                        {isSelected && <div className="radio-inner-dot" />}
+                      </div>
                     </div>
-                    <p className="payment-desc">{method.desc}</p>
                   </div>
                 );
               })}
             </div>
           </div>
 
-          {/* Contact Details */}
+          {/* ======================================================== */}
+          {/* 3. CONTACT DETAILS */}
+          {/* ======================================================== */}
           <div className="form-group">
             <label>
-              Email ID (Required) <span>البريد الإلكتروني (مطلوب)</span>
+              <span>Email ID (Required)</span>
+              <span>البريد الإلكتروني (مطلوب)</span>
             </label>
             <input 
               type="email" 
               value={emailId}
               onChange={(e) => setEmailId(e.target.value)}
               placeholder="e.g. yourname@domain.com"
+              className="booking-input"
               required
             />
           </div>
 
           <div className="form-group">
             <label>
-              Mobile Number (Required) <span>رقم الهاتف المحمول (مطلوب)</span>
+              <span>Mobile / WhatsApp (Required)</span>
+              <span>رقم الهاتف المحمول / واتساب (مطلوب)</span>
             </label>
             <input 
               type="tel" 
               value={mobileNo}
               onChange={(e) => setMobileNo(e.target.value)}
               placeholder="e.g. +974 3327 9451"
+              className="booking-input"
               required
             />
           </div>
@@ -415,38 +475,63 @@ const BookingForm = () => {
           <div className="form-row-two">
             <div className="form-group">
               <label>
-                Membership # (Optional) <span>رقم العضوية (إختياري)</span>
+                <span>Membership # (Optional)</span>
+                <span>رقم العضوية (إختياري)</span>
               </label>
               <input 
                 type="text" 
                 value={membershipNo}
                 onChange={(e) => setMembershipNo(e.target.value)}
                 placeholder="For renewals only"
+                className="booking-input"
               />
             </div>
 
             <div className="form-group">
               <label>
-                QID Number (Optional) <span>رقم البطاقة الشخصية (إختياري)</span>
+                <span>Qatar ID (Optional)</span>
+                <span>رقم البطاقة الشخصية (إختياري)</span>
               </label>
               <input 
                 type="text" 
                 value={qidNo}
                 onChange={(e) => setQidNo(e.target.value)}
                 placeholder="Qatar ID number"
+                className="booking-input"
               />
             </div>
           </div>
 
-          <button type="submit" className="btn-primary submit-btn" disabled={isSubmitting}>
-            {isSubmitting ? 'Processing Your Request...' : 'Proceed & Confirm / متابعة وتأكيد'}
-            <ArrowRight size={20} />
+          {/* ======================================================== */}
+          {/* 4. SUBMIT BUTTON */}
+          {/* ======================================================== */}
+          <button type="submit" className="submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? (
+              'Processing Your Request...'
+            ) : (
+              <>
+                <span>Complete Booking & Proceed / متابعة وتأكيد</span>
+                <ArrowRight size={20} />
+              </>
+            )}
           </button>
+
+          {/* Security & Support Bar */}
+          <div className="security-trust-bar">
+            <span><Lock size={13} color="#25d366" /> 256-Bit SSL Encrypted</span>
+            <span><Sparkles size={13} color="#00f2fe" /> Instant Desk Notification</span>
+            <span><PhoneCall size={13} color="#fff" /> Support: 3327 9451</span>
+          </div>
         </form>
 
+        {/* Footer Help */}
         <div className="booking-footer">
-          <p>For Immediate Assistance: 3327 9451 / 5035 0222 <span>للمساعدة أو الإستفسار الرجاء التواصل على</span></p>
+          <p>
+            QFit Gym Reception: +974 3327 9451 / +974 5035 0222
+            <span>للمساعدة أو الإستفسار الرجاء التواصل مع الاستقبال</span>
+          </p>
         </div>
+
       </div>
     </div>
   );
@@ -454,7 +539,7 @@ const BookingForm = () => {
 
 const Booking = () => {
   return (
-    <Suspense fallback={<div style={{minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff'}}>Loading Booking Details...</div>}>
+    <Suspense fallback={<div style={{minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff'}}>Loading Booking Checkout...</div>}>
       <BookingForm />
     </Suspense>
   );
