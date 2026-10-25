@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { useAdmin } from '@/context/AdminContext';
 import PageBanner from '@/components/PageBanner';
-import { Flame, Shield, Award, Dumbbell, Zap, CheckCircle2, CreditCard, Eye, X, FileText, ArrowRight, MessageSquare, Sparkles } from 'lucide-react';
+import { Flame, Shield, Zap, CheckCircle2, CreditCard, MessageSquare } from 'lucide-react';
 import './Packages.css';
 
 const CATEGORIES = [
@@ -34,7 +34,6 @@ const Packages = () => {
   const { data } = useAdmin();
   const gallery = data?.gallery || [];
   const [activeCategory, setActiveCategory] = useState('boxing');
-  const [showDocModal, setShowDocModal] = useState(false);
 
   // Helper to find a gallery image by title keyword, or by index fallback
   const getGalleryImage = (keyword, fallbackIndex, defaultPath) => {
@@ -466,15 +465,6 @@ const Packages = () => {
                 <h2>🏋️‍♂️ Personal Training & 1-on-1 Coaching <span className="arabic-sub" style={{display: 'inline', fontSize: '1.05rem', marginLeft: '6px'}}>(تدريب شخصي فردي)</span></h2>
                 <p>1-on-1 private coaching tailored to your individual schedule and fitness goals. Certified master coaches for striking, conditioning, and transformation.</p>
               </div>
-              <div className="category-banner-actions">
-                <button 
-                  type="button" 
-                  className="document-view-btn" 
-                  onClick={() => setShowDocModal(true)}
-                >
-                  <Eye size={16} /> View Official Rate Sheet
-                </button>
-              </div>
             </div>
 
             {/* 1-on-1 Combat & Fitness PT Packages */}
@@ -521,17 +511,7 @@ const Packages = () => {
           </div>
         )}
 
-        {/* DOCUMENT PREVIEW MODAL */}
-        {showDocModal && (
-          <div className="document-preview-modal-overlay" onClick={() => setShowDocModal(false)}>
-            <div className="document-preview-modal-content" onClick={(e) => e.stopPropagation()}>
-              <button className="modal-close-btn" onClick={() => setShowDocModal(false)}>
-                <X size={20} />
-              </button>
-              <img src="/training-prices.png" alt="QFit Training Prices Official Document" className="document-preview-img" />
-            </div>
-          </div>
-        )}
+
 
       </div>
     </div>
