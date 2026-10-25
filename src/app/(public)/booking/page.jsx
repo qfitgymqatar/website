@@ -34,7 +34,44 @@ const Booking = () => {
       
       if (error) throw error;
       
-      // Try to send EmailJS notification
+      // Dispatch email notification to info@qfitgymqatar.com
+      try {
+        await fetch('/api/send-booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: emailId,
+            mobile: mobileNo,
+            membership: membershipNo,
+            qid: qidNo
+          })
+        });
+      } catch (mailErr) {
+        console.error("API send-booking error:", mailErr);
+      }
+
+      // Also trigger direct browser fallback to ensure delivery
+      try {
+        await fetch('https://formsubmit.co/ajax/info@qfitgymqatar.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: `New Appointment Booking: ${emailId} (${mobileNo})`,
+            'Client Email': emailId,
+            'Mobile Phone': mobileNo,
+            'Membership Number': membershipNo || 'Not Provided',
+            'QID Number': qidNo || 'Not Provided',
+            _template: 'table'
+          })
+        });
+      } catch (fsErr) {
+        console.error("Direct mail fallback error:", fsErr);
+      }
+
+      // Also send EmailJS if credentials are configured
       try {
         const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
         const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
@@ -43,6 +80,7 @@ const Booking = () => {
         if (serviceId && templateId && publicKey) {
           await emailjs.send(serviceId, templateId, {
             to_name: 'Admin',
+            to_email: 'info@qfitgymqatar.com',
             from_email: emailId,
             mobile_no: mobileNo,
             membership_no: membershipNo || 'N/A',
