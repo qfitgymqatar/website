@@ -296,7 +296,7 @@ const AdminGallery = () => {
               value={editingId ? editTitle : title}
               onChange={(e) => editingId ? setEditTitle(e.target.value) : setTitle(e.target.value)}
               className="admin-input"
-              placeholder={editingId ? "e.g. Kickboxing" : "e.g. Cardio Zone (applies to all uploaded)"}
+              placeholder={editingId ? "e.g. Boxing" : "e.g. Cardio Zone (applies to all uploaded)"}
             />
           </div>
 
