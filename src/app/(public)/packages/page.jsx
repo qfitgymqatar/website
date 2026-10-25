@@ -1,14 +1,15 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useAdmin } from '@/context/AdminContext';
 import PageBanner from '@/components/PageBanner';
-import { Flame, Shield, Award, Dumbbell, Zap, CheckCircle2, CreditCard } from 'lucide-react';
+import { Flame, Shield, Award, Dumbbell, Zap, CheckCircle2, CreditCard, Eye, X, FileText, ArrowRight } from 'lucide-react';
 import '@/pageStyles/Packages.css';
 
 const Packages = () => {
   const { data } = useAdmin();
   const gallery = data?.gallery || [];
+  const [showDocModal, setShowDocModal] = useState(false);
 
   // Helper to find a gallery image by title keyword, or by index fallback
   const getGalleryImage = (keyword, fallbackIndex, defaultPath) => {
@@ -21,6 +22,69 @@ const Packages = () => {
     }
     return defaultPath;
   };
+
+  // Official QFit Training Prices Rate Card Data (from Official Price Sheet)
+  const rateCardGroupClasses = [
+    {
+      name: 'Boxing • Muay Thai • HIIT • Jiu-Jitsu',
+      price: 'QAR 60',
+      rate: 'QAR 60 / session',
+      category: 'Group Class'
+    },
+    {
+      name: 'Brazilian Jiu-Jitsu (BJJ)',
+      price: 'QAR 80',
+      rate: 'QAR 80 / session',
+      category: 'Group Class'
+    },
+    {
+      name: 'Monthly membership (Boxing • Muay Thai • HIIT)',
+      price: 'QAR 600',
+      rate: 'QAR 600 / month',
+      category: 'Group Class'
+    },
+    {
+      name: '3-month membership (Boxing • Muay Thai • HIIT)',
+      price: 'QAR 1500',
+      rate: 'QAR 1,500 / 3 months',
+      category: 'Group Class'
+    }
+  ];
+
+  const rateCardPersonalTraining = [
+    {
+      package: 'Single session',
+      validity: 'Per session',
+      price: 'QAR 250',
+      category: 'Personal Training'
+    },
+    {
+      package: 'Qatar Airways — 7 sessions',
+      validity: '2 months',
+      price: 'QAR 1300',
+      badge: '✈️ Qatar Airways Exclusive',
+      category: 'Personal Training'
+    },
+    {
+      package: '10 sessions',
+      validity: '1 month',
+      price: 'QAR 1500',
+      category: 'Personal Training'
+    },
+    {
+      package: '12 sessions',
+      validity: '1 month',
+      price: 'QAR 1600',
+      category: 'Personal Training'
+    },
+    {
+      package: '20 sessions',
+      validity: '6 weeks',
+      price: 'QAR 2000',
+      badge: '🔥 Best Value',
+      category: 'Personal Training'
+    }
+  ];
 
   const memberships = [
     { 
@@ -61,27 +125,27 @@ const Packages = () => {
     }
   ];
 
-  // Boxing Group Classes (from Official Poster)
+  // Boxing Group Classes
   const boxingGroupPackages = [
     {
-      category: 'Boxing Group Classes',
-      title: '1 Month Boxing Group',
+      category: 'Group Class',
+      title: '1 Month Membership',
       price: 'QAR 600',
       subtitle: 'شهر واحد - حصص جماعية',
       features: ['Boxing • Muay Thai • HIIT', 'Coached by Certified Fight Coaches', 'Boxing Ring & Heavy Bag Access', 'Separate Ladies & Gents Sections', 'All Fitness Levels Welcome'],
       img: '/boxing-poster.jpg'
     },
     {
-      category: 'Boxing Group Classes',
-      title: '3 Months Boxing Group',
+      category: 'Group Class',
+      title: '3 Months Membership',
       price: 'QAR 1500',
       subtitle: '3 أشهر - حصص جماعية',
       features: ['Boxing • Muay Thai • HIIT', 'Technical Striking & Footwork', 'High-Intensity Calorie Burning', 'Boxing Gear & Ring Access', 'Structured Fight Progression'],
       img: '/boxing-poster.jpg'
     },
     {
-      category: 'Boxing Group Classes',
-      title: '6 Months Boxing Group + BJJ',
+      category: 'Group Class',
+      title: '6 Months Membership + BJJ',
       price: 'QAR 2000',
       subtitle: '6 أشهر - ملاكمة ومواي تاي وجوجيتسو',
       features: ['Boxing • Muay Thai • HIIT • BJJ', 'Full Brazilian Jiu-Jitsu Included', 'Unlimited Fight Training Sessions', 'Maximum Savings (Best Combat Value)', 'Free Gym Facilities Access'],
@@ -91,45 +155,62 @@ const Packages = () => {
     }
   ];
 
-  // Boxing Personal Training (from Official Poster)
-  const boxingPTPackages = [
+  // Personal Training Packages (from Official Training Prices Rate Card)
+  const personalTrainingPackages = [
     {
-      category: 'Boxing Personal Training',
-      title: '7 Sessions Boxing PT',
+      category: 'Personal Training',
+      title: 'Single Session PT',
+      price: 'QAR 250',
+      validity: 'Per Session (جلسة واحدة)',
+      features: ['1-on-1 Fight & Fitness Coach', 'Focused Padwork or Lifting Routine', 'Technique & Form Correction', 'No Long-Term Commitment'],
+      img: getGalleryImage('', 5, '/hero-gym.jpg')
+    },
+    {
+      category: 'Personal Training',
+      title: 'Qatar Airways — 7 Sessions',
       price: 'QAR 1300',
       validity: 'Valid 2 Months (صالحة لمدة شهرين)',
-      features: ['1-on-1 Fight Coach', 'Mitt Work & Pad Drills', 'Technique & Defense Mastery', 'Customized Fight Fitness Plan'],
-      img: '/boxing-poster.jpg'
+      badge: '✈️ Qatar Airways Exclusive',
+      features: ['Special Rate for Qatar Airways Staff & Crew', '1-on-1 Dedicated Coach', 'Flexible Booking Around Flight Rosters', 'Mitt Work, Technique & Conditioning'],
+      img: getGalleryImage('', 6, '/hero-gym.jpg')
     },
     {
-      category: 'Boxing Personal Training',
-      title: '10 Sessions Boxing PT',
+      category: 'Personal Training',
+      title: '10 Sessions PT',
       price: 'QAR 1500',
       validity: 'Valid 1 Month (صالحة لمدة شهر واحد)',
-      features: ['1-on-1 Dedicated Coach', 'Boxing & Muay Thai Striking', 'Cardio & Strength Conditioning', 'Flexible Scheduling'],
-      img: '/boxing-poster.jpg'
+      features: ['1-on-1 Dedicated Coach', 'Striking, Cardio & Strength Conditioning', 'Tailored Workout Progression', 'Flexible Scheduling'],
+      img: getGalleryImage('', 7, '/service-pt.jpg')
     },
     {
-      category: 'Boxing Personal Training',
-      title: '20 Sessions Boxing PT',
-      price: 'QAR 2500',
-      validity: 'Valid 5 Weeks (صالحة لمدة 5 أسابيع)',
-      features: ['1-on-1 Intensive Training', 'Rapid Transformation & Skill', 'Nutritional Advice & Tracking', 'Priority Ring & Equipment Access'],
+      category: 'Personal Training',
+      title: '12 Sessions PT',
+      price: 'QAR 1600',
+      validity: 'Valid 1 Month (صالحة لمدة شهر واحد)',
+      features: ['3 Workouts Per Week Optimal Schedule', '1-on-1 Elite Coach Guidance', 'Technique Mastery & Body Transformation', 'Nutritional & Lifestyle Advice'],
+      img: getGalleryImage('', 8, '/hero-gym.jpg')
+    },
+    {
+      category: 'Personal Training',
+      title: '20 Sessions PT',
+      price: 'QAR 2000',
+      validity: 'Valid 6 Weeks (صالحة لمدة 6 أسابيع)',
       highlighted: true,
-      badge: 'Pro Choice',
-      img: '/boxing-poster.jpg'
+      badge: '🔥 Best Value',
+      features: ['Only QAR 100/session (Maximum Savings)', '1-on-1 Intensive Training', 'Rapid Transformation & Skill Building', 'Priority Ring & Equipment Access'],
+      img: getGalleryImage('', 9, '/service-pt.jpg')
     },
     {
-      category: 'Boxing Personal Training',
+      category: 'Personal Training',
       title: 'Couples PT (10 Sessions)',
       price: 'QAR 2500',
       validity: 'Valid 1 Month (صالحة لمدة شهر واحد - تدريب ثنائي)',
-      features: ['Train Together (2 Persons)', 'Fun & Dynamic Partner Drills', 'Customized Dual Workout Routines', 'Dedicated Fight Coach'],
-      img: '/boxing-poster.jpg'
+      features: ['Train Together (2 Persons)', 'Fun & Dynamic Partner Drills', 'Customized Dual Workout Routines', 'Dedicated Coach'],
+      img: getGalleryImage('', 10, '/hero-gym.jpg')
     }
   ];
 
-  // Per Session Drop-in Classes (from Official Poster)
+  // Per Session Drop-in Classes
   const perSessionRates = [
     {
       title: 'Boxing • Muay Thai • HIIT • Jiu-Jitsu',
@@ -150,14 +231,14 @@ const Packages = () => {
   // General Gym Personal Training
   const generalPtPackages = [
     { 
-      category: 'Gym Personal Training',
+      category: 'Gym Fitness PT',
       title: '15 Days PT', 
       price: 'QAR 700', 
       features: ['1-on-1 Certified Coach', 'Customized Workout Routine', 'Form & Technique Correction', 'Gym Floor Guidance'], 
       img: getGalleryImage('', 5, '/hero-gym.jpg') 
     },
     { 
-      category: 'Gym Personal Training',
+      category: 'Gym Fitness PT',
       title: '1 Month PT', 
       price: 'QAR 1000', 
       features: ['1-on-1 Certified Coach', 'Customized Workout Routine', 'Personalized Diet Plan', 'Weekly Body Progress Tracking'], 
@@ -165,7 +246,7 @@ const Packages = () => {
       img: getGalleryImage('', 6, '/service-pt.jpg') 
     },
     { 
-      category: 'Gym Personal Training',
+      category: 'Gym Fitness PT',
       title: '2 Months PT', 
       price: 'QAR 1650', 
       features: ['1-on-1 Certified Coach', 'Customized Workout Routine', 'Personalized Diet Plan', 'Priority Booking & VIP Access'], 
@@ -224,7 +305,133 @@ const Packages = () => {
         </div>
 
         {/* ======================================================== */}
-        {/* BOXING & COMBAT SPORTS FEATURE SECTION (NEW) */}
+        {/* OFFICIAL QFIT TRAINING PRICES RATE SHEET (DOCUMENT LAYOUT) */}
+        {/* ======================================================== */}
+        <div className="official-rate-sheet-section">
+          <div className="rate-sheet-header">
+            <h2 className="rate-sheet-title">QFIT</h2>
+            <p className="rate-sheet-subtitle">TRAINING PRICES • أسعار التدريب</p>
+            <div className="rate-sheet-actions-top">
+              <button 
+                type="button" 
+                className="document-view-btn" 
+                onClick={() => setShowDocModal(true)}
+              >
+                <Eye size={16} /> View Official Rate Sheet
+              </button>
+              <a 
+                href="/training-prices.png" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="document-view-btn"
+              >
+                <FileText size={16} /> Open Document Image
+              </a>
+            </div>
+          </div>
+
+          {/* GROUP CLASSES TABLE */}
+          <div className="rate-table-block">
+            <h3 className="rate-table-title">
+              <Flame size={20} color="#e60026" /> GROUP CLASSES <span className="arabic-sub" style={{fontSize: '0.9rem', display: 'inline', marginLeft: '8px'}}>(حصص جماعية)</span>
+            </h3>
+            <div className="rate-table-container">
+              <table className="rate-table">
+                <thead className="rate-table-dark-header">
+                  <tr>
+                    <th>Class / Membership</th>
+                    <th>Price</th>
+                    <th style={{textAlign: 'right'}}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rateCardGroupClasses.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>
+                        <span className="rate-item-name">{item.name}</span>
+                      </td>
+                      <td className="rate-price-cell">{item.rate}</td>
+                      <td style={{textAlign: 'right'}}>
+                        <button 
+                          className="rate-action-btn"
+                          onClick={() => window.location.href = `/booking?plan=${encodeURIComponent(`${item.category} - ${item.name}`)}&price=${encodeURIComponent(item.price)}`}
+                        >
+                          Book Now <ArrowRight size={14} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* PERSONAL TRAINING TABLE */}
+          <div className="rate-table-block">
+            <h3 className="rate-table-title">
+              <Dumbbell size={20} color="#00f2fe" /> PERSONAL TRAINING <span className="arabic-sub" style={{fontSize: '0.9rem', display: 'inline', marginLeft: '8px'}}>(تدريب شخصي)</span>
+            </h3>
+            <div className="rate-table-container">
+              <table className="rate-table">
+                <thead className="rate-table-red-header">
+                  <tr>
+                    <th>Package</th>
+                    <th>Validity</th>
+                    <th>Price</th>
+                    <th style={{textAlign: 'right'}}>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rateCardPersonalTraining.map((item, idx) => (
+                    <tr key={idx}>
+                      <td>
+                        <div className="rate-item-name">
+                          <span>{item.package}</span>
+                          {item.badge && (
+                            <span className={item.badge.includes('Qatar') ? 'qa-badge' : 'best-value-badge'}>
+                              {item.badge}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="rate-validity-tag">{item.validity}</td>
+                      <td className="rate-price-cell">{item.price}</td>
+                      <td style={{textAlign: 'right'}}>
+                        <button 
+                          className="rate-action-btn"
+                          onClick={() => window.location.href = `/booking?plan=${encodeURIComponent(`${item.category} - ${item.package}`)}&price=${encodeURIComponent(item.price)}`}
+                        >
+                          Book Now <ArrowRight size={14} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* SLOGAN AT BOTTOM */}
+          <div className="rate-sheet-slogan-wrap">
+            <h4 className="rate-sheet-slogan">Train hard. Build skill. Get stronger.</h4>
+            <p className="rate-sheet-slogan-ar">تدرب بقوة • ابنِ مهارتك • كن أقوى</p>
+          </div>
+        </div>
+
+        {/* DOCUMENT PREVIEW MODAL */}
+        {showDocModal && (
+          <div className="document-preview-modal-overlay" onClick={() => setShowDocModal(false)}>
+            <div className="document-preview-modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close-btn" onClick={() => setShowDocModal(false)}>
+                <X size={20} />
+              </button>
+              <img src="/training-prices.png" alt="QFit Training Prices Official Document" className="document-preview-img" />
+            </div>
+          </div>
+        )}
+
+        {/* ======================================================== */}
+        {/* BOXING & COMBAT SPORTS FEATURE SECTION */}
         {/* ======================================================== */}
         <div className="boxing-showcase-section">
           <div className="boxing-header-row">
@@ -260,11 +467,11 @@ const Packages = () => {
               </ul>
               <div className="boxing-promo-cta">
                 <a 
-                  href="#boxing-group-rates" 
+                  href="#group-class-cards" 
                   className="btn-primary" 
                   style={{padding: '12px 25px'}}
                 >
-                  View Boxing Rates Below ↓
+                  View Class Packages Below ↓
                 </a>
                 <a 
                   href="https://wa.me/97433279451?text=Hello,%20I%20would%20like%20to%20inquire%20about%20Boxing%20Classes%20at%20QFit%20Gym!" 
@@ -279,9 +486,9 @@ const Packages = () => {
             </div>
           </div>
 
-          {/* Table 1: Group Classes (Boxing) */}
-          <div id="boxing-group-rates" style={{paddingTop: '20px'}}>
-            <h3 className="sub-heading-center">Group Classes (Boxing / Muay Thai / HIIT / BJJ) <span className="arabic-sub">حصص جماعية (ملاكمة)</span></h3>
+          {/* Table 1: Group Classes (Cards) */}
+          <div id="group-class-cards" style={{paddingTop: '20px'}}>
+            <h3 className="sub-heading-center">Group Class Memberships (Boxing / Muay Thai / HIIT / BJJ) <span className="arabic-sub">حصص جماعية (ملاكمة ومواي تاي)</span></h3>
             <div className="packages-grid">
               {boxingGroupPackages.map(renderCard)}
             </div>
@@ -302,7 +509,7 @@ const Packages = () => {
                   </div>
                   <button 
                     className="btn-primary session-btn"
-                    onClick={() => window.location.href = `/booking?plan=${encodeURIComponent(item.title)}&price=${encodeURIComponent(item.price)}`}
+                    onClick={() => window.location.href = `/booking?plan=${encodeURIComponent(`Group Class - ${item.title}`)}&price=${encodeURIComponent(item.price)}`}
                   >
                     Book Session
                   </button>
@@ -311,11 +518,11 @@ const Packages = () => {
             </div>
           </div>
 
-          {/* Table 3: Boxing Personal Training */}
+          {/* Table 3: Personal Training */}
           <div style={{marginTop: '50px'}}>
-            <h3 className="sub-heading-center">Personal Training — Boxing <span className="arabic-sub">تدريب شخصي (ملاكمة)</span></h3>
+            <h3 className="sub-heading-center">Personal Training Packages <span className="arabic-sub">باقات التدريب الشخصي</span></h3>
             <div className="packages-grid">
-              {boxingPTPackages.map(renderCard)}
+              {personalTrainingPackages.map(renderCard)}
             </div>
           </div>
         </div>

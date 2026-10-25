@@ -8,23 +8,28 @@ import emailjs from '@emailjs/browser';
 import './Booking.css';
 
 const AVAILABLE_PLANS = [
+  // Training Prices Rate Card Plans
+  { name: 'Group Class - Boxing • Muay Thai • HIIT • Jiu-Jitsu (Single Session)', price: 'QAR 60' },
+  { name: 'Group Class - Brazilian Jiu-Jitsu (BJJ) (Single Session)', price: 'QAR 80' },
+  { name: 'Group Class - Monthly Membership (Boxing • Muay Thai • HIIT)', price: 'QAR 600' },
+  { name: 'Group Class - 3 Months Membership (Boxing • Muay Thai • HIIT)', price: 'QAR 1500' },
+  { name: 'Group Class - 6 Months Membership + BJJ', price: 'QAR 2000' },
+  { name: 'Personal Training - Single Session (Per session)', price: 'QAR 250' },
+  { name: 'Personal Training - Qatar Airways 7 Sessions (Valid 2 Months)', price: 'QAR 1300' },
+  { name: 'Personal Training - 10 Sessions (Valid 1 Month)', price: 'QAR 1500' },
+  { name: 'Personal Training - 12 Sessions (Valid 1 Month)', price: 'QAR 1600' },
+  { name: 'Personal Training - 20 Sessions (Valid 6 Weeks)', price: 'QAR 2000' },
+  { name: 'Personal Training - Couples PT 10 Sessions (Valid 1 Month)', price: 'QAR 2500' },
+  // General Gym Memberships
   { name: 'General Gym - 1 Month Membership', price: 'QAR 250' },
   { name: 'General Gym - 3 Months Membership', price: 'QAR 650' },
   { name: 'General Gym - 6 Months Membership', price: 'QAR 1200' },
   { name: 'General Gym - 1 Year Membership', price: 'QAR 2100' },
   { name: 'General Gym - Lifetime Member', price: 'QAR 15000' },
-  { name: 'Boxing Group - 1 Month (Boxing • Muay Thai • HIIT)', price: 'QAR 600' },
-  { name: 'Boxing Group - 3 Months (Boxing • Muay Thai • HIIT)', price: 'QAR 1500' },
-  { name: 'Boxing Group - 6 Months (Boxing • Muay Thai • HIIT • BJJ)', price: 'QAR 2000' },
-  { name: 'Boxing Session - Boxing • Muay Thai • HIIT • Jiu-Jitsu', price: 'QAR 60' },
-  { name: 'Boxing Session - Brazilian Jiu-Jitsu (BJJ)', price: 'QAR 80' },
-  { name: 'Boxing PT - 7 Sessions (Valid 2 Months)', price: 'QAR 1300' },
-  { name: 'Boxing PT - 10 Sessions (Valid 1 Month)', price: 'QAR 1500' },
-  { name: 'Boxing PT - 20 Sessions (Valid 5 Weeks)', price: 'QAR 2500' },
-  { name: 'Boxing PT - Couples PT 10 Sessions (Valid 1 Month)', price: 'QAR 2500' },
-  { name: 'Gym PT - 15 Days Personal Training', price: 'QAR 700' },
-  { name: 'Gym PT - 1 Month Personal Training', price: 'QAR 1000' },
-  { name: 'Gym PT - 2 Months Personal Training', price: 'QAR 1650' },
+  // General Fitness Coaching
+  { name: 'Gym Fitness PT - 15 Days Personal Training', price: 'QAR 700' },
+  { name: 'Gym Fitness PT - 1 Month Personal Training', price: 'QAR 1000' },
+  { name: 'Gym Fitness PT - 2 Months Personal Training', price: 'QAR 1650' },
   { name: 'General Gym Tour / Inquiry', price: 'Free' }
 ];
 
@@ -76,7 +81,7 @@ const BookingForm = () => {
   useEffect(() => {
     if (initialPlan) {
       setSelectedPlan(initialPlan);
-      const match = AVAILABLE_PLANS.find(p => p.name.toLowerCase().includes(initialPlan.toLowerCase()));
+      const match = AVAILABLE_PLANS.find(p => p.name.toLowerCase().includes(initialPlan.toLowerCase()) || initialPlan.toLowerCase().includes(p.name.toLowerCase()));
       if (match) {
         setSelectedPrice(initialPrice || match.price);
       } else if (initialPrice) {
@@ -85,10 +90,14 @@ const BookingForm = () => {
     }
   }, [initialPlan, initialPrice]);
 
+  const plansToRender = AVAILABLE_PLANS.some(p => p.name === selectedPlan)
+    ? AVAILABLE_PLANS
+    : [{ name: selectedPlan, price: selectedPrice }, ...AVAILABLE_PLANS];
+
   const handlePlanChange = (e) => {
     const planName = e.target.value;
     setSelectedPlan(planName);
-    const found = AVAILABLE_PLANS.find(p => p.name === planName);
+    const found = plansToRender.find(p => p.name === planName);
     if (found) {
       setSelectedPrice(found.price);
     }
@@ -312,7 +321,7 @@ const BookingForm = () => {
                 onChange={handlePlanChange} 
                 className="plan-select-input"
               >
-                {AVAILABLE_PLANS.map((plan, idx) => (
+                {plansToRender.map((plan, idx) => (
                   <option key={idx} value={plan.name}>
                     {plan.name} — {plan.price}
                   </option>

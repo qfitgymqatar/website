@@ -76,23 +76,23 @@ const Home = () => {
       <section className="home-services-section">
         <div className="content-wrapper text-center">
           <h2 style={{fontSize: '2.5rem', marginBottom: '15px'}}>Our <span className="gradient-text">Expertise</span></h2>
-          <p style={{color: 'var(--text-muted)', marginBottom: '50px', maxWidth: '600px', margin: '0 auto 50px'}}>Elevate your fitness journey with our specialized programs designed for maximum results.</p>
+          <p style={{color: 'var(--text-muted)', marginBottom: '50px', maxWidth: '600px', margin: '0 auto 50px'}}>Train hard. Build skill. Get stronger. Elevate your fitness journey with our specialized programs designed for maximum results.</p>
           
           <div className="grid-standard">
              <div className="service-teaser">
                 <div className="teaser-icon"><Users size={40} /></div>
                 <h3>Personal Training</h3>
-                <p>1-on-1 coaching with certified professionals.</p>
+                <p>1-on-1 coaching from single sessions up to 20 sessions + exclusive Qatar Airways rates.</p>
              </div>
              <div className="service-teaser">
                 <div className="teaser-icon"><Activity size={40} /></div>
                 <h3>Group Classes</h3>
-                <p>High-energy HIIT, Yoga, and Spin sessions.</p>
+                <p>High-energy Boxing, Muay Thai, HIIT & Brazilian Jiu-Jitsu (BJJ) sessions.</p>
              </div>
              <div className="service-teaser">
                 <div className="teaser-icon"><Heart size={40} /></div>
-                <h3>Nutrition</h3>
-                <p>Custom meal plans for holistic wellness.</p>
+                <h3>Combat & Conditioning</h3>
+                <p>Real self-defense skills, heavy bags, boxing ring & dedicated fight gear.</p>
              </div>
           </div>
           <Link href="/services" className="btn-secondary mt-4" style={{display: 'inline-flex', alignItems: 'center', gap: '10px'}}>
@@ -106,8 +106,8 @@ const Home = () => {
         <div className="cta-overlay"></div>
         <div className="cta-content">
           <h2>Ready To Transform <span className="gradient-text">Your Life?</span></h2>
-          <p>Join the best fitness community in Mansoura, Qatar today.</p>
-          <Link href="/packages" className="btn-primary">View Memberships</Link>
+          <p>Train hard. Build skill. Get stronger. Join the best fitness community in Mansoura, Qatar today.</p>
+          <Link href="/packages" className="btn-primary">View Memberships & Training Rates</Link>
         </div>
       </section>
     </div>

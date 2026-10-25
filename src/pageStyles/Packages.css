@@ -432,4 +432,314 @@
   .boxing-showcase-section {
     padding: 25px 15px;
   }
+  .official-rate-sheet-section {
+    padding: 25px 15px !important;
+  }
+  .rate-sheet-title {
+    font-size: 1.8rem !important;
+  }
+  .rate-table th, .rate-table td {
+    padding: 10px 12px !important;
+    font-size: 0.85rem !important;
+  }
+  .rate-action-btn {
+    padding: 6px 12px !important;
+    font-size: 0.8rem !important;
+  }
 }
+
+/* ======================================================== */
+/* OFFICIAL QFIT TRAINING PRICES RATE SHEET */
+/* ======================================================== */
+.official-rate-sheet-section {
+  margin: 40px 0 60px;
+  background: #0f0f10;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 45px 35px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.85), 0 0 35px rgba(230, 0, 38, 0.12);
+  position: relative;
+  overflow: hidden;
+}
+
+.official-rate-sheet-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00f2fe 0%, #e60026 50%, #00f2fe 100%);
+}
+
+.rate-sheet-header {
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.rate-sheet-title {
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: 4px;
+  color: #fff;
+  margin: 0;
+}
+
+.rate-sheet-subtitle {
+  font-size: 1.15rem;
+  letter-spacing: 5px;
+  color: var(--silver-light);
+  font-weight: 700;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.rate-sheet-actions-top {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 15px;
+  flex-wrap: wrap;
+}
+
+.rate-table-block {
+  margin-bottom: 40px;
+}
+
+.rate-table-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #fff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.rate-table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.rate-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  background: rgba(18, 18, 18, 0.95);
+}
+
+.rate-table th {
+  padding: 16px 20px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.rate-table-dark-header th {
+  background: #141414;
+  color: #fff;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+}
+
+.rate-table-red-header th {
+  background: #c41e24;
+  color: #fff;
+  border-bottom: 2px solid #e60026;
+}
+
+.rate-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.98rem;
+  color: #eee;
+  vertical-align: middle;
+}
+
+.rate-table tr:hover td {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.rate-table tr:last-child td {
+  border-bottom: none;
+}
+
+.rate-item-name {
+  font-weight: 600;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rate-validity-tag {
+  color: var(--silver-light);
+  font-size: 0.9rem;
+}
+
+.rate-price-cell {
+  font-weight: 800;
+  color: #fff;
+  font-size: 1.15rem;
+  white-space: nowrap;
+}
+
+.rate-action-btn {
+  padding: 8px 18px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 6px;
+  white-space: nowrap;
+  background: #e60026;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.rate-action-btn:hover {
+  background: #ff1a3d;
+  box-shadow: 0 0 15px rgba(230, 0, 38, 0.6);
+  transform: translateY(-1px);
+}
+
+.qa-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(148, 23, 81, 0.25);
+  border: 1px solid #941751;
+  color: #ff9ec9;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.best-value-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 242, 254, 0.15);
+  border: 1px solid var(--primary-cyan);
+  color: var(--primary-cyan);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 12px;
+}
+
+.rate-sheet-slogan-wrap {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-top: 25px;
+}
+
+.rate-sheet-slogan {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 2px;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.rate-sheet-slogan-ar {
+  font-size: 1.05rem;
+  color: var(--primary-cyan);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+.document-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.document-view-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: var(--primary-cyan);
+  color: #fff;
+}
+
+.document-preview-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.document-preview-modal-content {
+  position: relative;
+  max-width: 650px;
+  width: 100%;
+  max-height: 90vh;
+  background: #111;
+  border: 1px solid rgba(0, 242, 254, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+}
+
+.document-preview-img {
+  width: 100%;
+  height: auto;
+  max-height: 80vh;
+  object-fit: contain;
+  background: #fff;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.modal-close-btn:hover {
+  background: #e60026;
+  border-color: #e60026;
+}
+
