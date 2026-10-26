@@ -47,10 +47,22 @@
 
 @media (max-width: 768px) {
   .gallery-grid {
-    gap: 15px;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    grid-template-columns: repeat(2, 1fr);
   }
   .gallery-item {
-    height: 180px;
+    height: 160px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid {
+    gap: 8px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gallery-item {
+    height: 135px;
+    border-radius: 8px;
   }
 }

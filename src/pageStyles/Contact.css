@@ -1,6 +1,6 @@
 .contact-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 60px;
 }
 
@@ -86,9 +86,29 @@
 
 @media (max-width: 768px) {
   .contact-grid {
-    gap: 40px;
+    grid-template-columns: 1fr;
+    gap: 35px;
   }
   .contact-form {
-    padding: 30px 20px;
+    padding: 26px 18px;
+    border-radius: 16px;
+  }
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 16px !important; /* Prevents iOS auto-zoom */
+    padding: 13px 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-info-section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  .contact-form {
+    padding: 20px 14px;
+  }
+  .contact-item {
+    gap: 14px;
   }
 }

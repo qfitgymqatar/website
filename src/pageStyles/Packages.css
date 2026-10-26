@@ -452,14 +452,30 @@
 /* MOBILE RESPONSIVE OPTIMIZATIONS (MOST MOBILE FRIENDLY) */
 /* ======================================================== */
 @media (max-width: 768px) {
+  .registration-notice {
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    border-radius: 10px;
+  }
+
+  .registration-notice p {
+    font-size: 0.95rem;
+  }
+
+  .payment-options-banner {
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
   .category-tabs-container {
     grid-template-columns: 1fr;
     gap: 10px;
-    margin: 18px 0 24px;
+    margin: 16px 0 22px;
   }
   
   .category-tab-btn {
     padding: 14px 16px;
+    min-height: 56px;
     flex-direction: row;
     justify-content: space-between;
     text-align: left;
@@ -474,12 +490,12 @@
   }
 
   .category-tab-icon {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     margin-bottom: 0;
   }
 
   .category-tab-title {
-    font-size: 1rem;
+    font-size: 0.98rem;
   }
 
   .category-tab-badge {
@@ -499,12 +515,21 @@
   }
 
   .category-header-banner {
-    padding: 18px 16px;
+    padding: 18px 14px;
     border-radius: 14px;
   }
 
   .category-banner-info h2 {
     font-size: 1.35rem;
+  }
+
+  .category-pill-row {
+    gap: 6px;
+  }
+
+  .category-pill {
+    font-size: 0.72rem;
+    padding: 4px 8px;
   }
 
   .packages-grid {
@@ -513,7 +538,8 @@
   }
 
   .pkg-img-card {
-    min-height: 380px;
+    min-height: 340px;
+    border-radius: 14px;
   }
 
   .pkg-content {
@@ -521,8 +547,21 @@
   }
 
   .pkg-price {
-    font-size: 1.9rem;
+    font-size: 1.85rem;
     margin-bottom: 12px;
+  }
+
+  .pkg-features li {
+    font-size: 0.88rem;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .pkg-btn {
+    padding: 13px 18px;
+    min-height: 48px;
+    font-size: 0.95rem;
+    width: 100%;
   }
 
   .sub-heading-center {
@@ -536,10 +575,37 @@
   }
 
   .session-card {
-    padding: 20px 16px;
+    padding: 18px 14px;
+    border-radius: 12px;
   }
 
   .session-price {
-    font-size: 1.8rem;
+    font-size: 1.75rem;
+  }
+
+  .session-btn {
+    padding: 13px 16px;
+    min-height: 48px;
+    font-size: 0.95rem;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-tab-btn {
+    padding: 12px 14px;
+    min-height: 52px;
+  }
+
+  .category-header-banner {
+    padding: 16px 12px;
+  }
+
+  .category-banner-info h2 {
+    font-size: 1.2rem;
+  }
+
+  .pkg-content {
+    padding: 18px 12px;
   }
 }

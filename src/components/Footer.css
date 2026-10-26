@@ -176,3 +176,39 @@
   color: var(--text-muted);
   font-size: 0.9rem;
 }
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 45px 0 20px;
+  }
+  .footer-container {
+    width: 92%;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  .footer-logo-img {
+    max-width: 240px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .footer-section h3 {
+    font-size: 1.5rem;
+  }
+  .footer-section h4 {
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+  }
+  .social-icons {
+    gap: 10px;
+  }
+  .social-icons a {
+    width: 44px;
+    height: 44px;
+  }
+}

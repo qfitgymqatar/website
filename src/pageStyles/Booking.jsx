@@ -226,6 +226,15 @@ const BookingForm = () => {
         payment: chosenPayment
       });
 
+      // 6. Track Meta Pixel Lead conversion
+      if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
+        window.fbq('track', 'Lead', {
+          content_name: selectedPlan,
+          currency: 'QAR',
+          value: parseFloat(selectedPrice.replace(/[^0-9.]/g, '')) || 0
+        });
+      }
+
     } catch (error) {
       console.error('Error submitting booking:', error);
       alert('There was an error processing your request. Please try again or contact us directly.');

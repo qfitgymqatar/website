@@ -64,3 +64,25 @@
   font-weight: 600;
   letter-spacing: 1px;
 }
+
+@media (max-width: 768px) {
+  .trainers-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .trainer-card {
+    min-height: 380px;
+  }
+}
+
+@media (max-width: 480px) {
+  .trainer-card {
+    min-height: 340px;
+  }
+  .trainer-info {
+    padding: 20px 15px;
+  }
+  .trainer-name {
+    font-size: 1.4rem;
+  }
+}
